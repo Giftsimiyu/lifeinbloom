@@ -1,26 +1,268 @@
 @import "tailwindcss";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@theme {
+  --sm: 640px;
+  --md: 768px;
+  --lg: 1024px;
+}
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-background-primary: #f9f4f0;
+  --color-background-secondary: #eee5e0;
+
+  --color-accent-olive: #98995a;
+  --color-accent-sage: #a6b6ab;
+  --color-accent-peaches: #d49d88;
+  --color-accent-terracotta: #c97451;
+  --color-accent-canyon: #d6a07e;
+  --color-accent-sun-baked: #dec2aa;
+  --color-accent-aeolian-sand: #cfa28d;
+  --color-accent-wilderness: #c1865a;
+
+  --color-neutral-grey: #867d78;
+  --color-neutral-ash: #b2a9a1;
+  --color-neutral-cream: #e6dfd6;
+  --color-neutral-ivory: #f5f0e8;
+
+  /* fonts */
+  --font-monica-garden: var(--font-monica-garden, serif);
+  --font-mayfest-regular: var(--font-mayfest-regular, serif);
+  --font-the-munday: var(--font-the-munday, serif);
+  --font-inter: var(--font-inter, sans-serif);
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  background-color: var(--color-background-primary);
+  color: var(--color-neutral-grey);
+  font-family: var(--font-inter), serif;
+  lineheight: 1.75;
+}
+
+.container {
+  max-width: 72rem;
+  margin-inline: auto;
+  padding-inline: 1rem;
+}
+
+.section {
+  padding-block: 5rem;
+}
+
+.section--muted {
+  background-color: var(--color-background-secondary);
+}
+
+.heading {
+  font-family: var(--font-the-munday, serif);
+  font-size: clamp(2.2rem, 5vw, 3.2rem);
+  color: var(--color--accent--olive);
+  margin-bottom: 1rem;
+}
+
+.heading--small {
+  font-size: 1.75rem;
+}
+
+.subheading {
+  max-width: 38rem;
+  margin-inline: auto;
+  color: var(--color--neutral-grey);
+}
+
+h1,
+h2 {
+  font-family: var(--font-mayfest-regular, serif);
+}
+
+.logo,
+.section-title,
+.dropcap {
+  font-family: var(--font-monica-garden, cursive);
+}
+
+.prose {
+  max-width: 42rem;
+  margin-inline: auto;
+}
+
+.prose p {
+  margin-bottom: 1.5em;
+}
+
+.prose h2 {
+  font-family: var(--font-mayfest-regular, serif);
+  margin-top: 3rem;
+}
+
+.prose blockquote {
+  border-left: 3px solid var(--color--accent-sun-baked);
+  padding-left: 1rem;
+  font-style: italic;
+  color: var(--color--neutral-ash);
+  margin-bottom: 1.5em 0;
+}
+
+.prose blockquote p {
+  position: relative;
+}
+
+.prose p:first-of-type::first-letter {
+  font-family: var(--font-monica-garden, cursive);
+  font-size: 3.5rem;
+  float: left;
+  line-height: 1;
+  padding-right: 0.15em;
+}
+
+.divider {
+  margin-block: 5rem;
+  text-align: center;
+  font-family: var(--font-monica-garden, cursive);
+  font-size: 1.5rem;
+  color: var(--color-accent-peaches);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem 2.5rem;
+  border-radius: 999px;
+  font-size: 0.9375rem;
+  font-weight: 300;
+  text-decoration: none;
+  line-height: 1;
+  transition:
+    background-color 150ms ease,
+    color 150ms ease,
+    transform 60ms ease,
+    opacity 150ms ease;
+}
+
+.btn:focus {
+  outline: none;
+  box-shadow: 0 0 0 4px rgba(0, 0, 0, 0.06);
+  border-radius: 999px;
+}
+
+/* Primary button - filled accent */
+.btn-primary {
+  background-color: var(--color-accent-terracotta);
+  color: white;
+  border: none;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-accent-wilderness);
+  transform: translateY(-1px);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary button - outlined */
+.btn-secondary {
+  background-color: transparent;
+  color: var(--color-accent-olive);
+  border: 1px solid var(--color-accent-olive);
+  transition: background-color 150ms ease;
+}
+
+.btn-secondary:hover {
+  text-decoration: none;
+  background-color: var(--color-background-secondary);
+  transform: translateY(-1px);
+}
+
+/* Tertiary button - subtle text action */
+.btn-tertiary {
+  background-color: transparent;
+  color: var(--color-accent-terracotta);
+  border: none;
+}
+
+.btn-tertiary:hover {
+  text-decoration: underline;
+  transform: translateY(-1px);
+}
+
+.card {
+  background-color: var(--color-background-primary);
+  border-radius: 2rem;
+  overflow: hidden;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.card:hover img {
+  transform: scale(1.04);
+}
+
+.card-body {
+  padding: 1.5rem;
+}
+
+/* Small variant and icon helpers */
+.btn-sm {
+  padding: 0.25rem 0.75rem;
+  font-size: 0.8125rem;
+}
+
+/* Icon-only button compact spacing */
+.btn-icon {
+  padding: 0.5rem;
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.btn .icon,
+.btn .btn-icon svg,
+.btn .btn-icon img {
+  width: 1rem;
+  height: 1rem;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.btn .icon-left {
+  margin-right: 0.5rem;
+}
+
+.btn .icon-right {
+  margin-left: 0.5rem;
+}
+
+/* Large button variant */
+.btn-lg {
+  padding: 0.875rem 1.5rem;
+  font-size: 1rem;
+}
+
+/* Larger icon sizing for .btn-lg */
+.btn-lg .icon,
+.btn-lg .btn-icon svg,
+.btn-lg .btn-icon img {
+  width: 1.25rem;
+  height: 1.25rem;
 }

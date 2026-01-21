@@ -1,65 +1,89 @@
-import Image from "next/image";
+import React from "react";
+import Hero from "./components/hero";
+import PostCard from "./components/postCard";
+import QuestionOfTheWeek from "./components/questionOfTheWeek";
+import { getQuestionOfTheWeek } from "../sanity/lib/sanity";
+import Link from "next/link";
 
-export default function Home() {
+export default async function Home() {
+  const question = await getQuestionOfTheWeek();
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
+    <>
+      <Hero />
+
+      {/* Question of the Week Section */}
+      {question && (
+        <section className="bg-(--color-background-primary) py-20">
+          <div className="max-w-3xl mx-auto px-8">
+            <QuestionOfTheWeek question={question} />
+          </div>
+        </section>
+      )}
+
+      {/* Latest Posts Section */}
+      <section className="bg-(--color-background-secondary) py-24">
+        <div className="max-w-6xl mx-auto px-8">
+          <h2 className="font-display text-3xl text-(--color-accent-wilderness) mb-12">
+            Latest Blooms
+          </h2>
+
+          <div className="grid gap-12 md:grid-cols-3">
+            <PostCard
+              title="Finding softness in a loud world"
+              slug="finding-softness"
+              excerpt="A reflection on slowing down, choosing gentleness, and living with intention."
+              category="Soft Living"
+              image="/placeholder.jpg"
             />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+            <PostCard
+              title="Building a sanctuary in a small space"
+              slug="small-space-sanctuary"
+              excerpt="How I turned a tiny room into a place that feels like home."
+              category="The Blooming Home"
+              image="/placeholder.jpg"
+            />
+
+            <PostCard
+              title="Style as self-expression"
+              slug="style-as-expression"
+              excerpt="Dressing not to impress, but to feel like yourself."
+              category="Velvet & Vine"
+              image="/placeholder.jpg"
+            />
+          </div>
+
+          {/* Browse Categories */}
+          <div className="mt-16 pt-16 border-t border-(--color-neutral-light)">
+            <h3 className="font-display text-2xl text-(--color-accent-wilderness) mb-8">
+              Explore by Category
+            </h3>
+            <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+              {[
+                { name: "The Blooming Home", slug: "blooming-home" },
+                { name: "In Bloom", slug: "in-bloom" },
+                { name: "Soft Living", slug: "soft-living" },
+                { name: "Velvet & Vine", slug: "velvet-and-vine" },
+                { name: "Verses & Vinyl", slug: "verses-and-vinyl" },
+              ].map((cat) => (
+                <Link
+                  key={cat.slug}
+                  href={`/category/${cat.slug}`}
+                  className="group p-6 rounded-lg bg-(--color-background-primary) border border-(--color-neutral-light) hover:border-(--color-accent-olive) transition-all"
+                >
+                  <h4 className="font-display text-lg text-(--color-accent-wilderness) group-hover:text-(--color-accent-olive) transition-colors">
+                    {cat.name}
+                  </h4>
+                  <p className="text-xs uppercase tracking-wide text-(--color-neutral-grey) mt-2">
+                    Explore →
+                  </p>
+                </Link>
+              ))}
+            </div>
+          </div>
         </div>
-      </main>
-    </div>
+      </section>
+    </>
   );
 }
