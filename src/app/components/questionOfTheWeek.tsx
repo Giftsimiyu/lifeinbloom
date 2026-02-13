@@ -11,16 +11,8 @@ type QuestionOfTheWeekProps = {
 
 const portableTextComponents = {
   block: {
-    normal: ({ children }: any) => (
-      <p className="text-base leading-relaxed text-(--color-neutral-dark)">
-        {children}
-      </p>
-    ),
-    h3: ({ children }: any) => (
-      <h3 className="font-display text-lg text-(--color-accent-olive) mt-4 mb-2">
-        {children}
-      </h3>
-    ),
+    normal: ({ children }: any) => <p className="mb-4">{children}</p>,
+    h3: ({ children }: any) => <h3 className="mt-4 mb-2">{children}</h3>,
   },
   marks: {
     strong: ({ children }: any) => (
@@ -64,13 +56,13 @@ export default function QuestionOfTheWeek({
       </div>
 
       {question.description && (
-        <p className="text-base text-(--color-neutral-grey) italic mb-6 pl-14">
+        <p className="text-base text-(--color-neutral-grey) italic mb-6">
           {question.description}
         </p>
       )}
 
       {question.answer && (
-        <div className="mt-6 pt-6 border-t border-(--color-neutral-light) pl-14">
+        <div className="mt-6 pt-6 border-t border-(--color-neutral-light)">
           <div className="prose prose-sm max-w-none">
             <PortableText
               value={question.answer}
@@ -81,7 +73,7 @@ export default function QuestionOfTheWeek({
       )}
 
       {question.publishedAt && (
-        <p className="text-xs text-(--color-neutral-grey) mt-6 pl-14">
+        <p className="text-xs text-(--color-neutral-grey) mt-6">
           Published{" "}
           {new Date(question.publishedAt).toLocaleDateString("en-US", {
             year: "numeric",

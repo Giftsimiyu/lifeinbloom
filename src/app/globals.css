@@ -109,15 +109,25 @@ h2 {
 }
 
 .prose blockquote {
-  border-left: 3px solid var(--color--accent-sun-baked);
+  border-left: 3px solid var(--color-accent-sun-baked);
   padding-left: 1rem;
   font-style: italic;
-  color: var(--color--neutral-ash);
-  margin-bottom: 1.5em 0;
+  color: var(--color-neutral-ash);
+  margin: 1.5em 0;
 }
 
 .prose blockquote p {
   position: relative;
+}
+
+.prose a {
+  color: var(--color-accent-olive);
+  text-decoration: underline;
+  transition: color 150ms ease;
+}
+
+.prose a:hover {
+  color: var(--color-accent-wilderness);
 }
 
 .prose p:first-of-type::first-letter {
@@ -265,4 +275,33 @@ h2 {
 .btn-lg .btn-icon img {
   width: 1.25rem;
   height: 1.25rem;
+}
+
+/* Soft paper / botanical hero background */
+.bg-hero-paper {
+  background:
+    radial-gradient(
+      circle at top left,
+      rgba(222, 194, 170, 0.28),
+      transparent 55%
+    ),
+    radial-gradient(
+      circle at bottom right,
+      rgba(166, 182, 171, 0.22),
+      transparent 50%
+    ),
+    var(--color-background-primary);
+  position: relative;
+}
+
+/* Optional subtle grain */
+.bg-hero-paper::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.15;
+  mix-blend-mode: soft-light;
+  background-image: url("/textured-1.jpg"); /* add your own paper/grain texture image */
+  background-size: cover;
 }

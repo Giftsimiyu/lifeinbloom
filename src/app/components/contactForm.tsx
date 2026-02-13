@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Toast, { ToastType } from "./toast";
 
 interface FormState {
   isLoading: boolean;
@@ -22,6 +23,12 @@ export default function ContactForm() {
     success: false,
   });
 
+  const [toast, setToast] = useState<{
+    type: ToastType;
+    title: string;
+    message: string;
+  } | null>(null);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
@@ -39,6 +46,7 @@ export default function ContactForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setState({ isLoading: true, error: null, success: false });
+    setToast(null);
 
     try {
       const response = await fetch("/api/contact", {
@@ -56,18 +64,29 @@ export default function ContactForm() {
           data.errors && Array.isArray(data.errors)
             ? data.errors.join(", ")
             : data.message || "Failed to send message";
+        setToast({
+          type: "error",
+          title: "Message didn't bloom... 🌾",
+          message: errorMessage,
+        });
         setState({
           isLoading: false,
-          error: errorMessage,
+          error: null,
           success: false,
         });
         return;
       }
 
+      setToast({
+        type: "success",
+        title: "Message away! 📬",
+        message: "We've received your message and will be in touch soon.",
+      });
+
       setState({
         isLoading: false,
         error: null,
-        success: true,
+        success: false,
       });
 
       // Reset form
@@ -80,15 +99,17 @@ export default function ContactForm() {
 
       // Hide success message after 5 seconds
       setTimeout(() => {
-        setState((prev) => ({
-          ...prev,
-          success: false,
-        }));
+        setToast(null);
       }, 5000);
     } catch (error) {
+      setToast({
+        type: "error",
+        title: "Connection bloomed out 🌧️",
+        message: "An error occurred. Please try again in a moment.",
+      });
       setState({
         isLoading: false,
-        error: "An error occurred. Please try again later.",
+        error: null,
         success: false,
       });
     }
@@ -96,21 +117,15 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Success Message */}
-      {state.success && (
-        <div className="p-4 bg-green-50 border border-green-200 rounded-lg">
-          <p className="text-green-800 font-body">
-            Thank you! Your message has been sent successfully. We'll be in
-            touch soon!
-          </p>
-        </div>
-      )}
-
-      {/* Error Message */}
-      {state.error && (
-        <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
-          <p className="text-red-800 font-body">{state.error}</p>
-        </div>
+      {/* Toast Notification */}
+      {toast && (
+        <Toast
+          type={toast.type}
+          title={toast.title}
+          message={toast.message}
+          onDismiss={() => setToast(null)}
+          duration={5000}
+        />
       )}
 
       {/* Name Field */}

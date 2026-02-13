@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
-import Navbar from "./components/navbar";
-import Footer from "./components/footer";
+import NavbarFooterWrapper from "./components/navbarFooterWrapper";
 
 const monicaGarden = localFont({
   src: "./fonts/monicaGarden.otf",
@@ -71,9 +70,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${monicaGarden.variable} ${mayfestRegular.variable} ${theMunday.variable} antialiased`}
       >
-        <Navbar />
-        {children}
-        <Footer />
+        <NavbarFooterWrapper>{children}</NavbarFooterWrapper>
       </body>
     </html>
   );

@@ -10,7 +10,10 @@ import {author} from './author'
 import { questionOfTheWeek } from './questionOfTheWeek'
 import { comment } from './comment'
 import { newsletter } from './newsletter'
+import { announcement } from './announcement'
+import { product } from './product'
+import { productCategory } from './productCategory'
 
 export const schema = {
-    types: [post, category, subcategory, author, questionOfTheWeek, comment, newsletter],
+  types: [post, category, subcategory, author, questionOfTheWeek, comment, newsletter, announcement, product, productCategory],
 }

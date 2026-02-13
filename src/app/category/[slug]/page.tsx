@@ -1,14 +1,19 @@
+"use client";
+
 import CategoryLayout from "@/app/components/categoryLayout";
 import {
   getPaginatedPostsByCategory,
   getCategoryBySlug,
+  getSubcategoriesByCategory,
+  getPaginatedPostsBySubcategory,
 } from "@/sanity/lib/sanity";
+import { getCommentCounts } from "@/sanity/lib/comments";
 
 const POSTS_PER_PAGE = 12; // keep in sync with sanity.ts
 
 type CategoryPageProps = {
   params: { slug: string };
-  searchParams?: { page?: string };
+  searchParams?: { page?: string; subcategory?: string };
 };
 
 export default async function CategoryPage({
@@ -17,11 +22,23 @@ export default async function CategoryPage({
 }: CategoryPageProps) {
   const categorySlug = params.slug;
   const currentPage = Number(searchParams?.page ?? "1");
+  const selectedSubcategory = searchParams?.subcategory;
 
-  const [{ posts, total }, category] = await Promise.all([
-    getPaginatedPostsByCategory(categorySlug, currentPage, POSTS_PER_PAGE),
+  const [subcategories, category] = await Promise.all([
+    getSubcategoriesByCategory(categorySlug),
     getCategoryBySlug(categorySlug),
   ]);
+
+  let { posts, total } = await (selectedSubcategory
+    ? getPaginatedPostsBySubcategory(selectedSubcategory, categorySlug, currentPage, POSTS_PER_PAGE)
+    : getPaginatedPostsByCategory(categorySlug, currentPage, POSTS_PER_PAGE));
+
+  // Fetch comment counts for posts
+  const commentCounts = await getCommentCounts(posts.map((p: any) => p.slug));
+  posts = posts.map((post: any) => ({
+    ...post,
+    commentCount: commentCounts[post.slug] ?? 0
+  }));
 
   const totalPages = Math.max(1, Math.ceil(total / POSTS_PER_PAGE));
 
@@ -33,6 +50,8 @@ export default async function CategoryPage({
       currentPage={currentPage}
       totalPages={totalPages}
       posts={posts}
+      subcategories={subcategories}
+      selectedSubcategory={selectedSubcategory}
     />
   );
 }

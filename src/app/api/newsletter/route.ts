@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
+import { resend, FROM_EMAIL } from "@/lib/resend";
+import React from "react";
+import { NewsletterEmail } from "@/components/emails/NewsletterEmail";
+import { render } from "@react-email/render";
 import crypto from "crypto";
+import { syncSubscriberToResend, prepareSubscriberMetadata } from "@/lib/newsletterAutomation";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -45,18 +50,14 @@ export async function POST(request: NextRequest) {
     );
 
     if (existingSubscriber) {
-      // If already confirmed, return success message
-      if (existingSubscriber.confirmed) {
-        return NextResponse.json(
-          {
-            success: true,
-            message: "You're already subscribed to our newsletter!",
-          },
-          { status: 200 }
-        );
-      }
-      // If not confirmed, we could resend confirmation or just update
-      // For simplicity, we'll treat it as a new subscription
+      // Return the same message whether confirmed or not - prevents email enumeration
+      return NextResponse.json(
+        {
+          success: true,
+          message: "Thank you! If this email isn't already subscribed, you'll receive a confirmation shortly.",
+        },
+        { status: 200 }
+      );
     }
 
     // Generate confirmation token
@@ -79,10 +80,40 @@ export async function POST(request: NextRequest) {
     // For now, we'll auto-confirm to keep it simple
     await client.patch(subscriber._id).set({ confirmed: true }).commit();
 
+    // Sync subscriber to Resend for future campaign management
+    const metadata = prepareSubscriberMetadata(normalizedEmail, subscriber.subscribedAt);
+    const syncResult = await syncSubscriberToResend(normalizedEmail, metadata);
+    
+    if (!syncResult.success) {
+      console.warn("Failed to sync subscriber to Resend:", syncResult.error);
+      // Continue anyway - email sending is more critical than Resend sync
+    } else {
+      console.log("Subscriber synced to Resend:", normalizedEmail);
+    }
+
+    // Send welcome email
+    // Note: In development mode with Resend sandbox, we send to admin email instead
+    const emailElement = React.createElement(NewsletterEmail, { email: normalizedEmail });
+    const emailHtml = await render(emailElement);
+    const adminEmailForNewsletter = process.env.CONTACT_EMAIL;
+    const emailResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: adminEmailForNewsletter || normalizedEmail, // Send to admin email in dev mode
+      subject: "Welcome to Life in Bloom Newsletter!",
+      html: emailHtml,
+    });
+    
+    if (emailResult.error) {
+      console.error("Resend email error:", emailResult.error);
+    } else {
+      console.log("Newsletter email sent:", emailResult.data?.id);
+    }
+
     return NextResponse.json(
       {
         success: true,
-        message: "Thank you for subscribing! Check your email for confirmation.",
+        message: "Thank you for subscribing! You're all set to receive updates from Life in Bloom.",
+        subscriberId: subscriber._id,
       },
       { status: 201 }
     );

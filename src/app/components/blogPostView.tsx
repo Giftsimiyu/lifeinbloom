@@ -1,16 +1,14 @@
 import { PortableText } from "next-sanity";
 import Link from "next/link";
 import { urlFor } from "@/sanity/lib/image";
-import {
-  calculateReadingTimeFromPortableText,
-  formatReadingTime,
-} from "@/lib/readingTime";
 import AuthorCard from "./authorCard";
 import CommentsSection from "./commentsSection";
 import TagsDisplay from "./tagsDisplay";
-import SocialShare from "./socialShare";
-import TableOfContents from "./tableOfContents";
 import ImageGallery from "./imageGallery";
+import NewsletterPrompt from "./newsletterPrompt";
+import PostSidebar from "./postSidebar";
+import TableOfContentsDropdown from "./tableOfContentsDropdown";
+import { calculateReadingTimeFromPortableText, formatReadingTime } from "@/lib/readingTime";
 
 type GalleryImage = {
   _key?: string;
@@ -52,7 +50,9 @@ type BlogPostViewProps = {
     slug: string;
     excerpt: string;
     coverImage?: any;
+    content?: any;
     publishedAt?: string;
+    commentCount?: number;
     category?: {
       title: string;
       slug: string;
@@ -80,25 +80,43 @@ const portableTextComponents = {
     },
   },
   block: {
-    h2: ({ children }: any) => (
-      <h2 className="font-display text-3xl text-(--color-accent-wilderness) mt-12 mb-6">
-        {children}
-      </h2>
-    ),
-    h3: ({ children }: any) => (
-      <h3 className="font-display text-2xl text-(--color-accent-olive) mt-8 mb-4">
-        {children}
-      </h3>
-    ),
+    h1: ({ children, value }: any) => {
+      const headingId = `heading-${value._key || Math.random().toString(36).substr(2, 9)}`;
+      return (
+        <h1 data-heading-id={headingId} className="font-display text-4xl md:text-5xl text-(--color-accent-wilderness) mb-6 leading-tight">
+          {children}
+        </h1>
+      );
+    },
+    h2: ({ children, value }: any) => {
+      const headingId = `heading-${value._key || Math.random().toString(36).substr(2, 9)}`;
+      return (
+        <h2 data-heading-id={headingId} className="font-display text-3xl text-(--color-accent-wilderness) mt-12 mb-6">
+          {children}
+        </h2>
+      );
+    },
+    h3: ({ children, value }: any) => {
+      const headingId = `heading-${value._key || Math.random().toString(36).substr(2, 9)}`;
+      return (
+        <h3 data-heading-id={headingId} className="font-display text-2xl text-(--color-accent-olive) mt-8 mb-4">
+          {children}
+        </h3>
+      );
+    },
+    h4: ({ children, value }: any) => {
+      const headingId = `heading-${value._key || Math.random().toString(36).substr(2, 9)}`;
+      return (
+        <h4 data-heading-id={headingId} className="font-display text-xl text-(--color-accent-wilderness) mt-6 mb-3">
+          {children}
+        </h4>
+      );
+    },
     normal: ({ children }: any) => (
-      <p className="font-body text-base leading-relaxed text-(--color-neutral-dark) mb-6">
-        {children}
-      </p>
+      <p className="font-body text-base leading-relaxed text-(--color-neutral-dark) mb-6">{children}</p>
     ),
     blockquote: ({ children }: any) => (
-      <blockquote className="border-l-4 border-(--color-accent-olive) pl-6 py-4 my-8 italic text-(--color-neutral-grey)">
-        {children}
-      </blockquote>
+      <blockquote>{children}</blockquote>
     ),
   },
   marks: {
@@ -109,12 +127,7 @@ const portableTextComponents = {
     ),
     em: ({ children }: any) => <em className="italic">{children}</em>,
     link: ({ children, value }: any) => (
-      <a
-        href={value?.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="underline text-(--color-accent-olive) hover:text-(--color-accent-wilderness) transition-colors"
-      >
+      <a href={value?.href} target="_blank" rel="noopener noreferrer">
         {children}
       </a>
     ),
@@ -145,104 +158,106 @@ export default function BlogPostView({
 
   return (
     <main>
-      {/* Blog Post Header */}
-      <article className="max-w-3xl mx-auto px-8 py-16">
-        {/* Breadcrumb */}
-        <nav className="flex items-center gap-2 text-sm mb-8 text-(--color-neutral-grey)">
-          <Link href="/" className="hover:text-(--color-accent-olive)">
-            Home
-          </Link>
-          <span>/</span>
+      {/* Blog Post Header - Full Width */}
+      <section className="bg-(--color-background-primary)">
+        <div className="max-w-6xl mx-auto px-8 py-16">
+          {/* Breadcrumb */}
+          <nav className="flex items-center gap-2 text-sm mb-8 text-(--color-neutral-grey)">
+            <Link href="/home" className="hover:text-(--color-accent-olive)">
+              Home
+            </Link>
+            <span>/</span>
+            {post.category && (
+              <>
+                <Link
+                  href={`/category/${post.category.slug}`}
+                  className="hover:text-(--color-accent-olive)"
+                >
+                  {post.category.title}
+                </Link>
+                <span>/</span>
+              </>
+            )}
+            <span className="text-(--color-accent-olive)">{post.title}</span>
+          </nav>
+
+          {/* Category Badge */}
           {post.category && (
-            <>
-              <Link
-                href={`/category/${post.category.slug}`}
-                className="hover:text-(--color-accent-olive)"
-              >
-                {post.category.title}
-              </Link>
-              <span>/</span>
-            </>
-          )}
-          <span className="text-(--color-accent-olive)">{post.title}</span>
-        </nav>
-
-        {/* Category Badge */}
-        {post.category && (
-          <p className="text-xs uppercase tracking-widest text-(--color-accent-olive) mb-4">
-            {post.category.title}
-          </p>
-        )}
-
-        {/* Title */}
-        <h1 className="font-display text-4xl md:text-5xl text-(--color-accent-wilderness) mb-6 leading-tight">
-          {post.title}
-        </h1>
-
-        {/* Meta Information */}
-        <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 text-sm text-(--color-neutral-grey) mb-12 pb-8 border-b border-(--color-neutral-light)">
-          {post.publishedAt && (
-            <time dateTime={post.publishedAt}>
-              {new Date(post.publishedAt).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </time>
-          )}
-          {post.content && (
-            <span>
-              {formatReadingTime(
-                calculateReadingTimeFromPortableText(post.content),
-              )}
-            </span>
-          )}
-          {post.excerpt && (
-            <p className="text-(--color-neutral-dark) italic md:ml-auto">
-              {post.excerpt}
+            <p className="text-xs uppercase tracking-widest text-(--color-accent-olive) mb-4">
+              {post.category.title}
             </p>
           )}
-        </div>
 
-        {/* Tags */}
-        {post.tags && post.tags.length > 0 && (
-          <div className="mb-8">
-            <TagsDisplay tags={post.tags} />
+          {/* Title */}
+          <h1 className="font-display text-4xl md:text-5xl text-(--color-accent-wilderness) mb-6 leading-tight">
+            {post.title}
+          </h1>
+
+          {/* Meta Information */}
+          <div className="flex flex-col md:flex-row md:items-center gap-4 md:gap-8 text-sm text-(--color-neutral-grey) mb-12 pb-8 border-b border-(--color-neutral-light)">
+            {post.publishedAt && (
+              <time dateTime={post.publishedAt}>
+                {new Date(post.publishedAt).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </time>
+            )}
+            
+            {post.author && (
+              <span>
+                by <strong>{post.author.name}</strong>
+              </span>
+            )}
+            
+            {post.content && (
+              <span>
+                ⏱️ {formatReadingTime(calculateReadingTimeFromPortableText(post.content))}
+              </span>
+            )}
+
           </div>
-        )}
 
-        {/* Social Share */}
-        <div className="mb-12 pb-12 border-b border-(--color-neutral-light)">
-          <SocialShare
-            title={post.title}
-            slug={post.slug}
-            excerpt={post.excerpt}
+          {/* Tags */}
+          {post.tags && post.tags.length > 0 && (
+            <div className="mb-8">
+              <TagsDisplay tags={post.tags} />
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Featured Image */}
+      {imageUrl && (
+        <figure className="mb-0 overflow-hidden">
+          <img
+            src={imageUrl}
+            alt={post.title}
+            className="w-full h-96 md:h-128 object-cover"
+            loading="lazy"
           />
-        </div>
+        </figure>
+      )}
 
-        {/* Featured Image */}
-        {imageUrl && (
-          <figure className="mb-12 -mx-8 md:mx-0 md:rounded-lg overflow-hidden">
-            <img
-              src={imageUrl}
-              alt={post.title}
-              className="w-full h-96 md:h-128 object-cover"
-              loading="lazy"
-            />
-          </figure>
-        )}
+      {/* Main Content Section with Sidebar */}
+      <article className="grid grid-cols-1 lg:grid-cols-3 gap-12 max-w-6xl mx-auto px-8 py-16">
+        {/* Left Content Area - 2 columns */}
+        <div className="lg:col-span-2">
+          {/* Image Gallery (top-level gallery field) */}
+          {post.gallery && post.gallery.length > 0 && (
+            <div className="mb-16">
+              <ImageGallery images={post.gallery} />
+            </div>
+          )}
 
-        {/* Image Gallery (top-level gallery field) */}
-        {post.gallery && post.gallery.length > 0 && (
-          <div className="mb-16">
-            <ImageGallery images={post.gallery} />
-          </div>
-        )}
+          {/* Table of Contents Dropdown */}
+          {post.content && (
+            <TableOfContentsDropdown content={post.content} />
+          )}
 
-        {/* Post Content with Table of Contents Sidebar */}
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-8 mb-16">
-          {/* Main Content */}
-          <div className="lg:col-span-3 prose prose-lg max-w-none">
+          {/* Post Content */}
+          <div className="prose prose-lg max-w-none mb-16">
             {post.content ? (
               <PortableText
                 value={post.content}
@@ -255,25 +270,20 @@ export default function BlogPostView({
             )}
           </div>
 
-          {/* Table of Contents Sidebar */}
-          {post.content && (
-            <div className="hidden lg:block">
-              <TableOfContents content={post.content} />
-            </div>
-          )}
+         
         </div>
 
-        {/* Author Card */}
-        {post.author && (
-          <div className="mt-16">
-            <AuthorCard author={post.author} />
-          </div>
-        )}
-
-        {/* Comments Section */}
-        <div className="mt-16">
-          <CommentsSection postSlug={post.slug} />
-        </div>
+        {/* Right Sidebar - 1 column */}
+        <aside className="hidden lg:block">
+          <PostSidebar
+            postSlug={post.slug}
+            postTitle={post.title}
+            postExcerpt={post.excerpt}
+            postTags={post.tags}
+            relatedPosts={relatedPosts}
+            author={post.author}
+          />
+        </aside>
       </article>
 
       {/* Related Posts Section */}
@@ -281,7 +291,7 @@ export default function BlogPostView({
         <section className="bg-(--color-background-secondary) py-20">
           <div className="max-w-6xl mx-auto px-8">
             <h2 className="font-display text-3xl text-(--color-accent-wilderness) mb-12">
-              More from {post.category?.title}
+              You might also like
             </h2>
 
             <div className="grid gap-12 md:grid-cols-3">
@@ -333,18 +343,30 @@ export default function BlogPostView({
                         {relatedPost.excerpt}
                       </p>
 
-                      {relatedPost.publishedAt && (
-                        <p className="text-xs text-(--color-neutral-grey) mb-4">
-                          {new Date(relatedPost.publishedAt).toLocaleDateString(
-                            "en-US",
-                            {
-                              year: "numeric",
-                              month: "long",
-                              day: "numeric",
-                            },
-                          )}
-                        </p>
-                      )}
+                      {/* Reading time, published date, and comment count */}
+                      <div className="flex flex-wrap gap-4 mb-4 text-xs text-(--color-neutral-grey)">
+                        {relatedPost.content && (
+                          <span className="flex items-center gap-1">
+                            ⏱️ {formatReadingTime(calculateReadingTimeFromPortableText(relatedPost.content))}
+                          </span>
+                        )}
+                        {relatedPost.publishedAt && (
+                          <span>
+                            {new Date(relatedPost.publishedAt).toLocaleDateString(
+                              "en-US",
+                              {
+                                month: "short",
+                                day: "numeric",
+                              },
+                            )}
+                          </span>
+                        )}
+                        {relatedPost.commentCount !== undefined && (
+                          <span>
+                            💬 {relatedPost.commentCount} {relatedPost.commentCount === 1 ? 'comment' : 'comments'}
+                          </span>
+                        )}
+                      </div>
 
                       <footer>
                         <Link
@@ -363,6 +385,19 @@ export default function BlogPostView({
           </div>
         </section>
       )}
+
+      {/* Comments Section */}
+      <section className="bg-(--color-background-primary) py-20">
+        <div className="max-w-6xl mx-auto px-8">
+          <h2 className="font-display text-3xl text-(--color-accent-wilderness) mb-12">
+            Reader Comments
+          </h2>
+          <CommentsSection postSlug={post.slug} />
+        </div>
+      </section>
+
+      {/* Newsletter Subscription Prompt on Scroll */}
+      <NewsletterPrompt />
     </main>
   );
 }

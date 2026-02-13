@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { client } from "@/sanity/lib/client";
+import { resend, FROM_EMAIL } from "@/lib/resend";
+import { CommentNotificationEmail } from "@/components/emails/CommentNotificationEmail";
+import { render } from "@react-email/render";
+import React from "react";
+import { shouldAutoApproveComment, getApprovalMessage } from "@/lib/commentValidation";
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -50,23 +55,49 @@ export async function POST(request: NextRequest) {
 
     const { author, email, content, postSlug } = body;
 
+    // Check if comment should be auto-approved based on blog guidelines
+    const approvalResult = shouldAutoApproveComment(content, author);
+
     // Create comment document in Sanity
-    // Comments are created as drafts and must be manually approved
+    // Comments can be auto-approved if they pass validation, otherwise require manual review
     const comment = await client.create({
       _type: "comment",
       author,
       email,
       content,
       postSlug,
-      approved: false,
+      approved: approvalResult.shouldApprove,
       timestamp: new Date().toISOString(),
     });
+
+    // Send confirmation email to commenter
+    // Note: In development mode with Resend sandbox, we send to admin email instead
+    const emailElement = React.createElement(CommentNotificationEmail, { 
+      author, 
+      message: content,
+      autoApproved: approvalResult.shouldApprove 
+    });
+    const emailHtml = await render(emailElement);
+    const adminEmail = process.env.CONTACT_EMAIL;
+    const commentEmailResult = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: adminEmail || email, // Send to admin email in dev mode
+      subject: "Thank You for Your Comment!",
+      html: emailHtml,
+    });
+    
+    if (commentEmailResult.error) {
+      console.error("Comment email error:", commentEmailResult.error);
+    } else {
+      console.log("Comment confirmation email sent:", commentEmailResult.data?.id);
+    }
 
     return NextResponse.json(
       {
         success: true,
-        message: "Thank you for your comment! It will be published after review.",
+        message: getApprovalMessage(approvalResult),
         commentId: comment._id,
+        autoApproved: approvalResult.shouldApprove,
       },
       { status: 201 }
     );

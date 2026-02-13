@@ -1,38 +1,167 @@
+"use client";
+
+import { motion } from "framer-motion";
 import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="bg-(--color-background-primary)">
-      <div className="max-w-5xl mx-auto px-8 py-28 text-center">
-        {/* Eyebrow text */}
-        <p className="font-body text-sm tracking-wide uppercase text-(--color-accent-olive) mb-6">
-          A lifestyle journal
-        </p>
+    <section className="relative bg-hero-paper overflow-hidden">
+      {/* Top-left botanical vine */}
+      <motion.div
+        className="absolute top-0 left-0 opacity-40 hidden md:block z-0"
+        style={{ color: "var(--color-accent-olive)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
+        <svg
+          width="220"
+          height="220"
+          viewBox="0 0 220 220"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M30 30C50 60 80 100 120 140C150 170 180 200 220 220"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+          />
+          <circle cx="60" cy="70" r="2.5" fill="currentColor" />
+          <circle cx="100" cy="130" r="2" fill="currentColor" />
+          <circle cx="150" cy="180" r="2.5" fill="currentColor" />
+          <path
+            d="M70 85C85 105 105 130 130 155"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M110 125C130 150 155 185 180 210"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+          />
+        </svg>
+      </motion.div>
 
-        {/* Main headline */}
-        <h1 className="font-display text-5xl md:text-6xl leading-tight text-(--color-accent-wilderness) mb-8">
-          Life in bloom,
-          <br />
-          one season at a time
-        </h1>
+      {/* Top-right botanical vine */}
+      <motion.div
+        className="absolute top-0 right-0 opacity-40 hidden md:block z-0"
+        style={{ color: "var(--color-accent-wilderness)" }}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 0.4 }}
+        transition={{ delay: 0.5, duration: 1 }}
+      >
+        <svg
+          width="220"
+          height="220"
+          viewBox="0 0 220 220"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M190 30C170 60 140 100 100 140C70 170 40 200 0 220"
+            stroke="currentColor"
+            strokeWidth="1"
+            strokeLinecap="round"
+          />
+          <circle cx="160" cy="70" r="2.5" fill="currentColor" />
+          <circle cx="120" cy="130" r="2" fill="currentColor" />
+          <circle cx="70" cy="180" r="2.5" fill="currentColor" />
+          <path
+            d="M150 85C135 105 115 130 90 155"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+          />
+          <path
+            d="M110 125C90 150 65 185 40 210"
+            stroke="currentColor"
+            strokeWidth="0.8"
+            strokeLinecap="round"
+          />
+        </svg>
+      </motion.div>
 
-        {/* Subtext */}
-        <p className="font-body text-lg max-w-2xl mx-auto text-(--color-neutral-grey) mb-12">
-          Reflections on style, home, wellness, and becoming — written softly,
-          lived fully, shared honestly.
-        </p>
+      <div className="max-w-6xl mx-auto px-6 md:px-8 py-16 md:py-24 lg:py-32 relative z-10">
+        <motion.div
+          className="max-w-2xl"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+        >
+          {/* Personal greeting */}
+          <motion.p
+            className="text-sm tracking-wide mb-4"
+            style={{ color: "var(--color-accent-olive)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+          >
+            dear diary,
+          </motion.p>
 
-        {/* CTA */}
-        <div className="flex justify-center gap-6">
-          <Link href="/soft-living" className="btn btn-primary">
-            Start Reading
-          </Link>
+          {/* Main heading */}
+          <motion.h1
+            className="font-display text-5xl md:text-6xl lg:text-7xl leading-tight mb-6"
+            style={{ color: "var(--color-accent-wilderness)" }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4, duration: 0.8 }}
+          >
+            Life in Bloom
+          </motion.h1>
 
-          <Link href="/in-bloom" className="btn btn-secondary">
-            Personal Stories
-          </Link>
-        </div>
+          {/* Tagline */}
+          <motion.p
+            className="text-base md:text-lg leading-relaxed mb-8"
+            style={{ color: "var(--color-neutral-grey)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 0.6 }}
+          >
+            A journal of{" "}
+            <span className="italic">soft living, intentional spaces,</span> and
+            the <span className="italic">small, beautiful moments</span> that
+            make life feel like it&rsquo;s finally blooming.
+          </motion.p>
+
+          {/* Warm invitation */}
+          <motion.p
+            className="text-sm mb-10"
+            style={{ color: "var(--color-accent-peaches)" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.6, duration: 0.6 }}
+          >
+            Pull up a chair, pour something warm, and read along. 🌷
+          </motion.p>
+
+          {/* Primary CTAs */}
+          <motion.div
+            className="flex flex-wrap items-center gap-4"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.7, duration: 0.6 }}
+          >
+            <Link href="/blog" className="btn btn-primary">
+              Start reading
+            </Link>
+            <Link
+              href="/about"
+              className="btn btn-secondary"
+              style={{
+                color: "var(--color-accent-olive)",
+                borderColor: "var(--color-accent-olive)",
+              }}
+            >
+              About this space
+            </Link>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );
 }
+

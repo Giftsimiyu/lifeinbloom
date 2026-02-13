@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import Toast, { ToastType } from "./toast";
 
 interface Comment {
   id: string;
@@ -18,6 +19,7 @@ interface CommentsSectionProps {
 export default function CommentsSection({ postSlug }: CommentsSectionProps) {
   const [comments, setComments] = useState<Comment[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingComments, setIsLoadingComments] = useState(true);
   const [formData, setFormData] = useState({
     author: "",
     email: "",
@@ -26,6 +28,11 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
   const [message, setMessage] = useState<{
     type: "success" | "error";
     text: string;
+  } | null>(null);
+  const [toast, setToast] = useState<{
+    type: ToastType;
+    title: string;
+    message: string;
   } | null>(null);
 
   const handleChange = (
@@ -37,11 +44,31 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
       [name]: value,
     }));
   };
+  useEffect(() => {
+    const fetchComments = async () => {
+      try {
+        setIsLoadingComments(true);
+        const response = await fetch(`/api/comments/get?postSlug=${encodeURIComponent(postSlug)}`);
+        const data = await response.json();
+
+        if (data.success) {
+          setComments(data.comments);
+        }
+      } catch (error) {
+        console.error("Error loading comments:", error);
+      } finally {
+        setIsLoadingComments(false);
+      }
+    };
+
+    fetchComments();
+  }, [postSlug]);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
     setMessage(null);
+    setToast(null);
 
     try {
       const response = await fetch(`/api/comments`, {
@@ -61,9 +88,10 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
         throw new Error(data.message || "Failed to submit comment");
       }
 
-      setMessage({
+      setToast({
         type: "success",
-        text: "Thank you! Your comment has been submitted for review.",
+        title: "Your voice blooms! 🌸",
+        message: "Thank you for sharing. We'll review your comment shortly.",
       });
 
       setFormData({
@@ -72,15 +100,27 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
         content: "",
       });
 
+      // If comment was auto-approved, refresh the comments list immediately
+      if (data.autoApproved) {
+        const refreshResponse = await fetch(
+          `/api/comments/get?postSlug=${encodeURIComponent(postSlug)}`
+        );
+        const refreshData = await refreshResponse.json();
+        if (refreshData.success) {
+          setComments(refreshData.comments);
+        }
+      }
+
       // Reset message after 5 seconds
-      setTimeout(() => setMessage(null), 5000);
+      setTimeout(() => setToast(null), 5000);
     } catch (error) {
-      setMessage({
+      setToast({
         type: "error",
-        text:
+        title: "The bloom faded... 🍂",
+        message:
           error instanceof Error
             ? error.message
-            : "Failed to submit comment. Please try again.",
+            : "Unable to share your comment right now. Please try again.",
       });
     } finally {
       setIsLoading(false);
@@ -88,14 +128,18 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
   };
 
   return (
-    <section className="bg-(--color-background-primary) py-12 my-12 rounded-2xl p-8 md:p-12 border border-(--color-neutral-light)">
+    <section className="bg-(--color-background-primary) py-12 my-12 rounded-2xl p-8 md:p-12">
       <div className="max-w-3xl mx-auto">
         <h3 className="font-display text-2xl text-(--color-accent-wilderness) mb-8">
           Comments
         </h3>
 
         {/* Comments List */}
-        {comments.length > 0 ? (
+        {isLoadingComments ? (
+          <div className="mb-12 text-center py-8">
+            <p className="font-body text-(--color-neutral-grey)">Loading comments...</p>
+          </div>
+        ) : comments.length > 0 ? (
           <div className="mb-12 space-y-6">
             {comments.map((comment) => (
               <article
@@ -132,21 +176,15 @@ export default function CommentsSection({ postSlug }: CommentsSectionProps) {
             Leave a Comment
           </h4>
 
-          {message && (
-            <div
-              className={`p-4 mb-6 rounded-lg ${
-                message.type === "success"
-                  ? "bg-green-50 border border-green-200"
-                  : "bg-red-50 border border-red-200"
-              }`}
-            >
-              <p
-                className={`font-body text-sm ${
-                  message.type === "success" ? "text-green-800" : "text-red-800"
-                }`}
-              >
-                {message.text}
-              </p>
+          {toast && (
+            <div className="mb-6">
+              <Toast
+                type={toast.type}
+                title={toast.title}
+                message={toast.message}
+                onDismiss={() => setToast(null)}
+                duration={5000}
+              />
             </div>
           )}
 

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import AnnouncementStrip from "./announcementStrip";
 
 export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
@@ -20,11 +21,11 @@ export default function Navbar() {
   };
 
   return (
-    <header className="bg-(--color-background-secondary) border-b border-(--color-neutral-cream)">
+    <header className="sticky top-0 z-50 backdrop-blur-sm shadow-sm bg-(--color-background-secondary) border-b border-(--color-neutral-cream)">
       {/* Top Navbar */}
       <div className="max-w-7xl mx-auto px-6 md:px-8 py-4 flex items-center justify-between">
         {/* Logo on the left */}
-        <Link href="/" aria-label="Home" className="flex items-center gap-3">
+        <Link href="/home" aria-label="Home" className="flex items-center gap-3">
           <Image
             src="/LIB-logo.jpg"
             alt="Life in Bloom logo"
@@ -41,13 +42,29 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Right navigation: About, Contact, Search */}
+        {/* Right navigation: Home, About, Contact, Search */}
         <nav
           className={`flex items-center transition-all duration-300 ${searchOpen ? "w-full md:w-3/4" : ""}`}
+          aria-label="Primary navigation"
         >
           {!searchOpen && (
             <>
-              <div className="relative group">
+              <Link
+                href="/home"
+                className="font-body text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                role="link"
+              >
+                Home
+              </Link>
+
+              <Link
+                href="/shop"
+                className="font-body text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors ml-6 md:ml-8"
+              >
+                Shop
+              </Link>
+
+              <div className="relative group ml-6 md:ml-8">
                 <Link
                   href="/about"
                   className="font-body text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
@@ -82,6 +99,8 @@ export default function Navbar() {
           {/* Search Bar */}
           <div
             className={`relative ml-auto transition-all duration-300 ${searchOpen ? "w-full md:pr-4" : ""}`}
+            role="search"
+            aria-label="Site search"
           >
             {searchOpen ? (
               <form onSubmit={handleSearch} className="w-full">
@@ -168,19 +187,19 @@ export default function Navbar() {
             <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-(--color-neutral-cream) bg-(--color-background-primary) shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
               <div className="p-4 space-y-2">
                 <Link
-                  href="/velvet-and-vine/the-style-edit"
+                  href="/subcategory/the-style-edit"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   The Style Edit
                 </Link>
                 <Link
-                  href="/velvet-and-vine/glow-and-grow"
+                  href="/subcategory/glow-and-grow"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Glow & Grow
                 </Link>
                 <Link
-                  href="/velvet-and-vine/the-wardrobe"
+                  href="/subcategory/the-wardrobe"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   The Wardrobe
@@ -200,19 +219,19 @@ export default function Navbar() {
             <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-(--color-neutral-cream) bg-(--color-background-primary) shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
               <div className="p-4 space-y-2">
                 <Link
-                  href="/blooming-home/interior-inspiration"
+                  href="/subcategory/interior-inspiration"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Interior Inspiration
                 </Link>
                 <Link
-                  href="/blooming-home/small-spaces"
+                  href="/subcategory/small-spaces"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Small Spaces
                 </Link>
                 <Link
-                  href="/blooming-home/sanctuary"
+                  href="/subcategory/sanctuary"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Sanctuary
@@ -232,19 +251,19 @@ export default function Navbar() {
             <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-(--color-neutral-cream) bg-(--color-background-primary) shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
               <div className="p-4 space-y-2">
                 <Link
-                  href="/soft-living/nourish"
+                  href="/subcategory/nourish"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Nourish
                 </Link>
                 <Link
-                  href="/soft-living/connections"
+                  href="/subcategory/connections"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Connections
                 </Link>
                 <Link
-                  href="/soft-living/self-care"
+                  href="/subcategory/self-care"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Self Care
@@ -264,13 +283,13 @@ export default function Navbar() {
             <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-(--color-neutral-cream) bg-(--color-background-primary) shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
               <div className="p-4 space-y-2">
                 <Link
-                  href="/verses-and-vinyl/the-library"
+                  href="/subcategory/the-library"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   The Library
                 </Link>
                 <Link
-                  href="/verses-and-vinyl/music"
+                  href="/subcategory/music"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Music
@@ -287,19 +306,19 @@ export default function Navbar() {
             <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-(--color-neutral-cream) bg-(--color-background-primary) shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
               <div className="p-4 space-y-2">
                 <Link
-                  href="/in-bloom/personal-stories"
+                  href="/subcategory/personal-stories"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Personal Stories
                 </Link>
                 <Link
-                  href="/in-bloom/user-submissions"
+                  href="/subcategory/user-submissions"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   User Submissions
                 </Link>
                 <Link
-                  href="/in-bloom/QOW"
+                  href="/subcategory/qow"
                   className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
                 >
                   Question of the Week
@@ -309,6 +328,7 @@ export default function Navbar() {
           </div>
         </div>
       </nav>
+      <AnnouncementStrip />
     </header>
   );
 }

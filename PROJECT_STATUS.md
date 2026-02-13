@@ -202,28 +202,48 @@ This document provides a comprehensive overview of what has been completed and w
 - [x] **Responsive Layout** - Grid layout (3 cols main content, 1 col TOC on lg screens)
 - [x] **Header Extraction** - Parses PortableText content to find all h2/h3 headers
 
+#### 10. Image Gallery ✨
+
+- [x] **Gallery Component** - Created reusable image gallery component
+- [x] **Lightbox Functionality** - Click image to open full-screen lightbox modal
+- [x] **Carousel Navigation** - Previous/next arrows for browsing images
+- [x] **Keyboard Controls** - Arrow keys for navigation, ESC to close lightbox
+- [x] **Touch/Swipe Gestures** - Swipe left/right to navigate on mobile devices
+- [x] **Slide Indicators** - Dot indicators showing current image position and total count
+- [x] **Image Counter** - Display "X / Y" counter in lightbox for visual reference
+- [x] **Smooth Transitions** - CSS transitions for fluid image switching
+- [x] **Post Integration** - Gallery displays on blog posts via gallery field in schema
+
+#### 11. Pagination ✨
+
+- [x] **GROQ Query Updated** - `getPaginatedPostsByCategory()` with limit/offset support
+- [x] **Page Parameter Handling** - Query parameter parsing from URL (e.g., `?page=2`)
+- [x] **Category Pages Updated** - All category pages use paginated queries:
+  - Blooming Home
+  - In Bloom
+  - Soft Living
+  - Velvet & Vine
+  - Verses & Vinyl
+- [x] **Posts Per Page** - Set to 12 posts per page
+- [x] **Pagination UI** - Previous/Next buttons with page number display
+- [x] **Dynamic Total Pages** - Calculated from total post count
+- [x] **Disabled State Styling** - Previous/Next buttons disabled at page boundaries
+
+#### 12. Related Content ✨
+
+- [x] **Tag-Based Algorithm** - New `getRelatedPostsByTags()` function for intelligent matching
+- [x] **Tag Matching Score** - Posts ranked by number of shared tags
+- [x] **Fallback Strategy** - Falls back to category-based posts if no tag matches
+- [x] **Blog Post Integration** - Related posts displayed on blog post pages
+- [x] **Flexible Heading** - Changed from "More from {category}" to "You might also like"
+- [x] **3-Post Sidebar** - Shows up to 3 related posts in responsive grid
+- [x] **Date & Excerpt Display** - Full post preview with metadata
+
 ---
 
 ## 📋 PENDING IMPLEMENTATION
 
 ### Medium Priority (Content & User Experience)
-
-#### 10. Image Gallery
-
-- Create image gallery component for post content
-- Lightbox functionality
-- Carousel for multiple images
-
-#### 11. Pagination
-
-- Implement pagination on category pages (show 10-15 posts per page instead of all)
-- Add previous/next navigation
-- Implement limit/offset in GROQ queries
-
-#### 12. Related Content
-
-- Improve related posts algorithm (by tags, similar topics)
-- Show related articles in sidebar
 
 #### 13. RSS Feed
 

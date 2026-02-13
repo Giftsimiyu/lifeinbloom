@@ -1,9 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
+import Toast, { ToastType } from "./toast";
 
 interface NewsletterFormProps {
-  variant?: "inline" | "full";
+  variant?: "inline" | "full" | "sidebar";
   placeholder?: string;
 }
 
@@ -13,15 +15,16 @@ export default function NewsletterForm({
 }: NewsletterFormProps) {
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [message, setMessage] = useState<{
-    type: "success" | "error";
-    text: string;
+  const [toast, setToast] = useState<{
+    type: ToastType;
+    title: string;
+    message: string;
   } | null>(null);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsLoading(true);
-    setMessage(null);
+    setToast(null);
 
     try {
       const response = await fetch("/api/newsletter", {
@@ -38,24 +41,26 @@ export default function NewsletterForm({
         throw new Error(data.message || "Failed to subscribe");
       }
 
-      setMessage({
+      setToast({
         type: "success",
-        text: data.message || "Thank you for subscribing!",
+        title: "Welcome to the garden! 🌿",
+        message: "Check your email for a special gift from us.",
       });
 
       setEmail("");
 
       // Clear success message after 5 seconds
       setTimeout(() => {
-        setMessage(null);
+        setToast(null);
       }, 5000);
     } catch (error) {
-      setMessage({
+      setToast({
         type: "error",
-        text:
+        title: "That didn't quite bloom...",
+        message:
           error instanceof Error
             ? error.message
-            : "Failed to subscribe. Please try again.",
+            : "Unable to connect right now. Please try again in a moment.",
       });
     } finally {
       setIsLoading(false);
@@ -64,22 +69,22 @@ export default function NewsletterForm({
 
   if (variant === "full") {
     return (
-      <div className="w-full">
-        {message && (
-          <div
-            className={`p-4 mb-4 rounded-lg ${
-              message.type === "success"
-                ? "bg-green-50 border border-green-200"
-                : "bg-red-50 border border-red-200"
-            }`}
-          >
-            <p
-              className={`font-body text-sm ${
-                message.type === "success" ? "text-green-800" : "text-red-800"
-              }`}
-            >
-              {message.text}
-            </p>
+      <motion.div 
+        className="w-full"
+        initial={{ opacity: 0, y: 10 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        viewport={{ once: true }}
+      >
+        {toast && (
+          <div className="mb-4">
+            <Toast
+              type={toast.type}
+              title={toast.title}
+              message={toast.message}
+              onDismiss={() => setToast(null)}
+              duration={5000}
+            />
           </div>
         )}
 
@@ -88,7 +93,7 @@ export default function NewsletterForm({
             <label htmlFor="newsletter-email" className="sr-only">
               Email address
             </label>
-            <input
+            <motion.input
               id="newsletter-email"
               type="email"
               required
@@ -97,45 +102,108 @@ export default function NewsletterForm({
               disabled={isLoading}
               className="w-full px-4 py-3 border border-(--color-neutral-light) rounded-lg font-body text-base focus:outline-none focus:border-(--color-accent-olive) focus:ring-2 focus:ring-(--color-accent-olive)/20 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
               placeholder={placeholder}
+              whileFocus={{ scale: 1.01 }}
+              transition={{ type: 'spring', stiffness: 400 }}
             />
           </div>
 
-          <button
+          <motion.button
             type="submit"
             disabled={isLoading}
             className="btn btn-primary w-full disabled:opacity-50 disabled:cursor-not-allowed"
+            whileHover={{ scale: 1.02 }}
+            whileTap={{ scale: 0.98 }}
+            transition={{ type: 'spring', stiffness: 400 }}
           >
             {isLoading ? "Subscribing..." : "Subscribe"}
-          </button>
+          </motion.button>
 
           <p className="font-body text-xs text-(--color-neutral-grey) text-center italic">
             We respect your privacy. Unsubscribe at any time.
           </p>
         </form>
-      </div>
+      </motion.div>
+    );
+  }
+  // Sidebar variant (compact stacked) -------------------------------------------------
+  if (variant === "sidebar") {
+    return (
+      <motion.div
+        className="w-full"
+        initial={{ opacity: 0, y: 6 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.3 }}
+        viewport={{ once: true }}
+      >
+        {toast && (
+          <div className="mb-3">
+            <Toast
+              type={toast.type}
+              title={toast.title}
+              message={toast.message}
+              onDismiss={() => setToast(null)}
+              duration={5000}
+            />
+          </div>
+        )}
+
+        <form onSubmit={handleSubmit} className="space-y-3">
+          <label htmlFor="sidebar-email" className="sr-only">
+            Email address
+          </label>
+          <input
+            id="sidebar-email"
+            type="email"
+            required
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
+            placeholder={placeholder}
+            className="w-full px-3 py-2 border border-(--color-neutral-cream) rounded-md bg-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          />
+
+          <button
+            type="submit"
+            disabled={isLoading}
+            className="btn btn-primary w-full py-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoading ? "Subscribing..." : "Subscribe"}
+          </button>
+
+          <p className="font-body text-xs text-(--color-neutral-grey) italic">
+            We respect your privacy. Unsubscribe at any time.
+          </p>
+        </form>
+      </motion.div>
     );
   }
 
   // Inline variant (used in footer)
   return (
-    <div className="w-full max-w-sm">
-      {message && (
-        <div
-          className={`mb-3 p-3 rounded text-xs ${
-            message.type === "success"
-              ? "bg-green-50 text-green-800"
-              : "bg-red-50 text-red-800"
-          }`}
-        >
-          {message.text}
+    <motion.div 
+      className="w-full"
+      initial={{ opacity: 0 }}
+      whileInView={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+      viewport={{ once: true }}
+    >
+      {toast && (
+        <div className="mb-3">
+          <Toast
+            type={toast.type}
+            title={toast.title}
+            message={toast.message}
+            onDismiss={() => setToast(null)}
+            duration={5000}
+          />
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex">
+      <form onSubmit={handleSubmit} className="flex flex-wrap items-stretch gap-3">
         <label htmlFor="footer-email" className="sr-only">
           Email
         </label>
-        <input
+        <motion.input
           id="footer-email"
           type="email"
           required
@@ -143,16 +211,18 @@ export default function NewsletterForm({
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
           placeholder={placeholder}
-          className="flex-1 rounded-full px-4 py-2 border border-(--color-neutral-cream) bg-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          className="flex-1 min-w-0 rounded-full px-4 py-2 border border-(--color-neutral-cream) bg-white text-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          whileFocus={{ scale: 1.02 }}
+          transition={{ type: 'spring', stiffness: 400 }}
         />
-        <button
+        <motion.button
           type="submit"
           disabled={isLoading}
-          className="ml-3 btn btn-primary btn-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          className="ml-0 md:ml-3 btn btn-primary disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0 px-4 py-2"
         >
           {isLoading ? "..." : "Subscribe"}
-        </button>
+        </motion.button>
       </form>
-    </div>
+    </motion.div>
   );
 }

@@ -1,33 +1,55 @@
-import { Metadata } from "next";
-import Link from "next/link";
+'use client';
 
-export const metadata: Metadata = {
-  title: "About Life in Bloom",
-  description:
-    "Learn about Life in Bloom, a lifestyle blog exploring soft living, fashion, beauty, home design, and personal growth.",
-};
+import { category } from "@/sanity/schemaTypes/category";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import RotatingFlower from "@/app/components/rotatingFlower";
+import Floating3dLeaf from "@/app/components/floating3dLeaf";
+import GlowingAccent from "@/app/components/glowingAccent";
 
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-(--color-background-secondary)">
       {/* Hero Section */}
-      <section className="bg-(--color-background-primary) py-20 md:py-32">
-        <div className="max-w-4xl mx-auto px-8 text-center">
-          <h1 className="font-display text-5xl md:text-6xl text-(--color-accent-wilderness) mb-6 leading-tight">
+      <section className="relative bg-(--color-background-primary) py-20 md:py-32 overflow-hidden">
+        {/* 3D Decorative elements */}
+        <RotatingFlower position="top-right" size={100} delay={0} />
+        <RotatingFlower position="bottom-left" size={80} delay={2} />
+        <Floating3dLeaf delay={0} scale={1.2} />
+        <Floating3dLeaf delay={1.5} scale={0.9} />
+        
+        <div className="max-w-4xl mx-auto px-8 text-center relative z-10">
+          <motion.h1 
+            className="font-display text-5xl md:text-6xl text-(--color-accent-wilderness) mb-6 leading-tight"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7 }}
+          >
             About Life in Bloom
-          </h1>
-          <p className="font-body text-xl text-(--color-neutral-grey) leading-relaxed">
+          </motion.h1>
+          <motion.p 
+            className="font-body text-xl text-(--color-neutral-grey) leading-relaxed"
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
             A cozy corner of the internet dedicated to soft living,
             self-discovery, and finding beauty in the everyday.
-          </p>
+          </motion.p>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="py-24">
-        <div className="max-w-4xl mx-auto px-8">
+      <section className="py-24 relative">
+        <GlowingAccent position="top-right" size={250} color="olive" />
+        <div className="max-w-4xl mx-auto px-8 relative z-10">
           <div className="grid md:grid-cols-2 gap-12 items-center">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
               <h2 className="font-display text-3xl text-(--color-accent-wilderness) mb-6">
                 Our Mission
               </h2>
@@ -43,15 +65,26 @@ export default function AboutPage() {
                 soft living, sustainable style, home as a refuge, and the gentle
                 growth that comes from being kind to yourself.
               </p>
-            </div>
-            <div className="bg-gradient-to-br from-(--color-accent-olive)/10 to-(--color-accent-terracotta)/10 rounded-2xl p-12 flex items-center justify-center min-h-96">
+            </motion.div>
+            <motion.div 
+              className="bg-linear-to-br from-(--color-accent-olive)/10 to-(--color-accent-terracotta)/10 rounded-2xl p-12 flex items-center justify-center min-h-96"
+              style={{ perspective: '1000px' }}
+              whileHover={{
+                rotateX: 5,
+                rotateY: -5,
+              }}
+              transition={{ type: 'spring', stiffness: 300, damping: 30 }}
+              initial={{ opacity: 0, x: 20 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+            >
               <div className="text-center">
                 <div className="text-6xl mb-4">🌿</div>
                 <p className="font-display text-2xl text-(--color-accent-olive)">
                   Growing Gently
                 </p>
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -144,7 +177,7 @@ export default function AboutPage() {
                 key={index}
                 className="flex gap-6 pb-8 border-b border-(--color-neutral-light) last:border-0"
               >
-                <div className="flex-shrink-0">
+                <div className="shrink-0">
                   <div className="flex items-center justify-center h-12 w-12 rounded-full bg-(--color-accent-olive)/10">
                     <svg
                       className="h-6 w-6 text-(--color-accent-olive)"
@@ -181,10 +214,10 @@ export default function AboutPage() {
             down.
           </p>
           <div className="flex flex-col md:flex-row gap-4 justify-center">
-            <Link href="/" className="btn btn-primary">
+            <Link href="/home" className="btn btn-primary">
               Back to Home
             </Link>
-            <Link href="/category/soft-living" className="btn btn-secondary">
+            <Link href="/category" className="btn btn-secondary">
               Explore Categories
             </Link>
             <Link href="/contact" className="btn btn-tertiary">
