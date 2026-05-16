@@ -91,7 +91,7 @@ export const product = defineType({
       description: "URL for digital product download (required for digital products)",
       hidden: ({ parent }) => !parent?.isDigital,
       validation: (Rule) => Rule.custom((value, context) => {
-        if (context.parent?.isDigital && !value) {
+        if ((context.parent as any)?.isDigital && !value) {
           return 'Download link is required for digital products'
         }
         return true
@@ -131,7 +131,7 @@ export const product = defineType({
       description: "Products included in this bundle",
       hidden: ({ parent }) => !parent?.isBundle,
       validation: (Rule) => Rule.custom((value, context) => {
-        if (context.parent?.isBundle && (!value || value.length === 0)) {
+        if ((context.parent as any)?.isBundle && (!value || value.length === 0)) {
           return 'Bundle items are required for product bundles'
         }
         return true
