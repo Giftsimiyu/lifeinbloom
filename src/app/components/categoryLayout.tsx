@@ -184,7 +184,7 @@ export default function CategoryLayout({
                         slug={post.slug}
                         excerpt={post.excerpt}
                         category={post.category?.title ?? "Life in Bloom"}
-                        image={imageUrl}
+                        image={imageUrl ?? undefined}
                         content={post.content}
                         publishedAt={post.publishedAt}
                         commentCount={post.commentCount}

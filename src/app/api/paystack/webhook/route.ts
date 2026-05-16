@@ -3,11 +3,7 @@ import { client } from '@/sanity/lib/client'
 import crypto from 'crypto'
 
 // disable Next.js body parser so we can compute signature on raw body
-export const config = {
-  api: {
-    bodyParser: false,
-  },
-}
+
 
 export async function POST(req: NextRequest) {
   try {

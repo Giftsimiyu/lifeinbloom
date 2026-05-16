@@ -120,7 +120,7 @@ export default function Landing() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.6 }}
         >
-          A journal of <span className="italic">soft living, intentional spaces,</span> and the <span className="italic">small, beautiful moments</span> that make life feel like it&rsquo;s finally blooming.
+          A journal of <span className="italic">soft living, intentional spaces,</span> and the <span className="italic">small, beautiful moments</span> that make life feel like it's finally blooming.
         </motion.p>
 
         {/* Warm invitation */}
