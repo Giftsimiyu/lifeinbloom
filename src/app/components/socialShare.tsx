@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { FaTwitter, FaFacebook, FaPinterest, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaFacebook, FaPinterest, FaLinkedin, FaInstagram } from "react-icons/fa";
+import { FaXTwitter} from "react-icons/fa6";
 import { MdCheck, MdContentCopy } from "react-icons/md";
 
 interface SocialShareProps {
@@ -23,7 +24,7 @@ export default function SocialShare({
   const encodedExcerpt = encodeURIComponent(excerpt || "");
 
   const shareLinks = {
-    twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
+    x: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
     facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
     pinterest: `https://pinterest.com/pin/create/button/?url=${encodedUrl}&description=${encodedTitle}`,
     linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodedUrl}`,
@@ -47,16 +48,16 @@ export default function SocialShare({
       </span>
 
       <div className="flex flex-wrap gap-2">
-        {/* Twitter */}
+        {/* X (formerly Twitter) */}
         <a
-          href={shareLinks.twitter}
+          href={shareLinks.x}
           target="_blank"
           rel="noopener noreferrer"
           className="inline-flex items-center justify-center w-10 h-10 rounded-full bg-(--color-accent-olive)/10 text-(--color-accent-olive) hover:bg-(--color-accent-olive)/20 transition-colors"
-          aria-label="Share on Twitter"
-          title="Share on Twitter"
+          aria-label="Share on X (formerly Twitter)"
+          title="Share on X (formerly Twitter)"
         >
-          <FaTwitter className="w-5 h-5" />
+          <FaXTwitter className="w-5 h-5" />
         </a>
 
         {/* Facebook */}
