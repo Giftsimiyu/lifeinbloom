@@ -6,6 +6,7 @@ import {
   getAllPosts,
 } from "../../../sanity/lib/sanity";
 import BlogPostView from "../../components/blogPostView";
+import { getCommentCounts, getCommentCountForPost } from "@/sanity/lib/comments";
 import { urlFor } from "@/sanity/lib/image";
 
 export async function generateMetadata({
@@ -45,6 +46,7 @@ export default async function PostRedirectPage({
 }) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
+  const thisPostCommentCount = await getCommentCountForPost(slug);
 
   let relatedPosts = [];
 
@@ -56,5 +58,11 @@ export default async function PostRedirectPage({
     relatedPosts = await getRelatedPosts(post.category.slug, post.slug, 3);
   }
 
-  return <BlogPostView post={post} relatedPosts={relatedPosts} />;
+  return (
+    <BlogPostView
+      post={post}
+      commentCount={thisPostCommentCount}
+      relatedPosts={relatedPosts}
+    />
+  );
 }

@@ -76,7 +76,7 @@ export default function CategoryLayout({
     }
   }, []);
   return (
-    <main>
+    <main className="overflow-x-hidden">
       {/* Category Hero Section */}
       <section className="relative bg-(--color-background-primary) py-16 md:py-24 overflow-hidden">
         {/* 3D Elements */}

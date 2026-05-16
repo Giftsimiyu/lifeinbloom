@@ -36,7 +36,7 @@ export default async function SearchPage({
   }
 
   return (
-    <main className="min-h-screen bg-(--color-background-secondary)">
+    <main className="min-h-screen bg-(--color-background-secondary) overflow-x-hidden">
       {/* 3D Elements */}
       <RotatingFlower position="top-right" size={100} delay={0} />
       <Floating3dLeaf delay={0.5} scale={1} />

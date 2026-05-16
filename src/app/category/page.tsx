@@ -8,7 +8,7 @@ export default async function CategoriesPage() {
   const categories = await getAllCategories();
 
   return (
-    <main className="relative bg-(--color-background-secondary) py-24">
+    <main className="relative bg-(--color-background-secondary) py-24 overflow-x-hidden">
       {/* Decorative 3D elements */}
       <RotatingFlower position="top-right" size={120} delay={0} />
       <RotatingFlower position="bottom-left" size={90} delay={2} />

@@ -6,9 +6,9 @@ import { motion } from "framer-motion";
 import {
   FaInstagram,
   FaPinterest,
-  FaTwitter,
   FaLinkedin,
 } from "react-icons/fa";
+import { FaXTwitter} from "react-icons/fa6";
 import NewsletterForm from "./newsletterForm";
 import GlowingAccent from "./glowingAccent";
 
@@ -71,11 +71,11 @@ export default function Footer() {
             <motion.a 
               href="/" 
               target="_blank" 
-              aria-label="Twitter"
+              aria-label="X (formerly Twitter)"
               whileHover={{ scale: 1.2, rotate: 12 }}
               transition={{ type: 'spring', stiffness: 400 }}
             >
-              <FaTwitter className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
+              <FaXTwitter className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
             </motion.a>
             <motion.a 
               href="/" 
@@ -163,7 +163,10 @@ export default function Footer() {
           <p className="font-body text-xs text-(--color-neutral-grey) mb-3">
             © {new Date().getFullYear()} Life in Bloom. All rights reserved.
           </p>
-          <div className="flex justify-center gap-4 font-body text-xs">
+          <p className="font-body text-xs text-(--color-neutral-grey) mb-4">
+            Site content is licensed under <a href="/license" className="underline">CC BY‑NC‑ND 4.0</a> (see license page for details).
+          </p>
+          <div className="flex flex-wrap justify-center gap-4 font-body text-xs">
             <Link
               href="/privacy"
               className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
@@ -176,6 +179,34 @@ export default function Footer() {
               className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
             >
               Terms of Service
+            </Link>
+            <span className="text-(--color-neutral-cream)">|</span>
+            <Link
+              href="/refund-policy"
+              className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+            >
+              Refund Policy
+            </Link>
+            <span className="text-(--color-neutral-cream)">|</span>
+            <Link
+              href="/disclaimer"
+              className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+            >
+              Disclaimer
+            </Link>
+            <span className="text-(--color-neutral-cream)">|</span>
+            <Link
+              href="/license"
+              className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+            >
+              License
+            </Link>
+            <span className="text-(--color-neutral-cream)">|</span>
+            <Link
+              href="/suggest"
+              className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+            >
+              Suggest a Post
             </Link>
           </div>
         </div>

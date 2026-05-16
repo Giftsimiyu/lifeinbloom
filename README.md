@@ -29,6 +29,30 @@ To learn more about Next.js, take a look at the following resources:
 
 You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
+### Environment Variables
+
+The checkout API uses several environment variables for optional features:
+
+```text
+# site URL used to build Paystack callback and other redirects
+NEXT_PUBLIC_SITE_URL=https://lifeinbloomblog.com
+
+# Paystack integration (optional for digital shop payments)
+PAYSTACK_SECRET_KEY=sk_test_xxx
+# (public key can be used client-side if needed)
+PAYSTACK_PUBLIC_KEY=pk_test_xxx
+# currency code sent to Paystack; defaults to NGN
+PAYSTACK_CURRENCY=KSH
+# configure webhook endpoint in Paystack dashboard:
+# https://yourdomain.com/api/paystack/webhook
+
+# Resend email support (used to send order confirmation)
+RESEND_API_KEY=
+RESEND_FROM_EMAIL=orders@yourdomain.com
+```
+
+Be sure to set these values in your development `.env.local` and in whatever deployment platform you use.
+
 ## Deploy on Vercel
 
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.

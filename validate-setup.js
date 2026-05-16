@@ -39,6 +39,7 @@ const routes = [
   { path: "/api/newsletter", method: "POST", desc: "Newsletter Signup" },
   { path: "/api/comments", method: "POST", desc: "Comment Submission" },
   { path: "/api/comments", method: "GET", desc: "Fetch Comments" },
+  { path: "/api/post-ideas", method: "POST", desc: "Post idea / suggestion" },
 ];
 
 routes.forEach((route) => {

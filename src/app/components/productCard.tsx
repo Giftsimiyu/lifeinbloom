@@ -11,6 +11,11 @@ interface ProductCardProps {
   image: string;
   price: number;
   originalPrice?: number;
+  isDigital?: boolean;
+  isBundle?: boolean;
+  bundleItems?: any[];
+  bundlePrice?: number;
+  bundleDescription?: string;
   category?: {
     title: string;
     slug: string;
@@ -24,10 +29,22 @@ export default function ProductCard({
   image,
   price,
   originalPrice,
+  isDigital,
+  isBundle,
+  bundleItems,
+  bundlePrice,
+  bundleDescription,
   category,
 }: ProductCardProps) {
   const discount = originalPrice
     ? Math.round(((originalPrice - price) / originalPrice) * 100)
+    : 0;
+
+  // Calculate bundle pricing
+  const displayPrice = isBundle && bundlePrice ? bundlePrice : price;
+  const displayOriginalPrice = isBundle && bundlePrice ? price : originalPrice;
+  const bundleSavings = isBundle && bundleItems
+    ? bundleItems.reduce((sum, item) => sum + item.price, 0) - displayPrice
     : 0;
 
   return (
@@ -51,7 +68,7 @@ export default function ProductCard({
           
           {/* Discount Badge */}
           {discount > 0 && (
-            <div className="absolute top-4 right-4 bg-(--color-accent-terracotta) text-white px-3 py-1 rounded-full text-sm font-semibold">
+            <div className={`absolute ${(isDigital || isBundle) ? 'top-20' : 'top-4'} right-4 bg-(--color-accent-terracotta) text-white px-3 py-1 rounded-full text-sm font-semibold`}>
               -{discount}%
             </div>
           )}
@@ -60,6 +77,20 @@ export default function ProductCard({
           {category && (
             <div className="absolute top-4 left-4 bg-(--color-accent-olive) text-white px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">
               {category.title}
+            </div>
+          )}
+
+          {/* Digital Badge */}
+          {isDigital && (
+            <div className="absolute top-4 right-4 bg-blue-500 text-white px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider">
+              Digital
+            </div>
+          )}
+
+          {/* Bundle Badge */}
+          {isBundle && (
+            <div className={`absolute ${isDigital ? 'top-12' : 'top-4'} right-4 bg-purple-500 text-white px-3 py-1 rounded-full text-xs font-medium uppercase tracking-wider`}>
+              Bundle
             </div>
           )}
         </div>
@@ -79,14 +110,23 @@ export default function ProductCard({
           {/* Price Section */}
           <div className="flex items-baseline gap-2 mb-4">
             <span className="font-display text-2xl text-(--color-accent-wilderness)">
-              ${price.toFixed(2)}
+              KSH{displayPrice.toFixed(2)}
             </span>
-            {originalPrice && originalPrice > price && (
+            {displayOriginalPrice && displayOriginalPrice > displayPrice && (
               <span className="text-sm text-(--color-neutral-grey) line-through">
-                ${originalPrice.toFixed(2)}
+                KSH{displayOriginalPrice.toFixed(2)}
               </span>
             )}
           </div>
+
+          {/* Bundle Savings */}
+          {isBundle && bundleSavings > 0 && (
+            <div className="mb-4">
+              <span className="text-sm font-medium text-green-600 bg-green-50 px-2 py-1 rounded">
+                Save KSH{bundleSavings.toFixed(2)}
+              </span>
+            </div>
+          )}
 
           {/* CTA Button */}
           <button className="w-full bg-(--color-accent-wilderness) hover:bg-(--color-accent-olive) text-white font-semibold py-2 px-4 rounded transition-colors duration-200">

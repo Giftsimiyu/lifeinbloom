@@ -3,6 +3,8 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import localFont from "next/font/local";
 import NavbarFooterWrapper from "./components/navbarFooterWrapper";
+import { CartProvider } from "./components/cartContext";
+import { WishlistProvider } from "./components/wishlistContext";
 
 const monicaGarden = localFont({
   src: "./fonts/monicaGarden.otf",
@@ -27,7 +29,10 @@ const inter = Inter({
   subsets: ["latin"],
 });
 
+const BASE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://lifeinbloomblog.com";
+
 export const metadata: Metadata = {
+  viewport: "width=device-width, initial-scale=1",
   title: {
     default: "Life in Bloom",
     template: "%s | Life in Bloom",
@@ -38,7 +43,7 @@ export const metadata: Metadata = {
     title: "Life in Bloom",
     description:
       "A cozy, bohemian lifestyle blog about soft living, fashion, beauty, home, and personal stories.",
-    url: "https://lifeinbloom.com",
+    url: BASE_URL,
     siteName: "Life in Bloom",
     images: [
       {
@@ -68,9 +73,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${monicaGarden.variable} ${mayfestRegular.variable} ${theMunday.variable} antialiased`}
+        className={`${inter.variable} ${monicaGarden.variable} ${mayfestRegular.variable} ${theMunday.variable} antialiased overflow-x-hidden`}
       >
-        <NavbarFooterWrapper>{children}</NavbarFooterWrapper>
+        <CartProvider>
+          <WishlistProvider>
+            <NavbarFooterWrapper>{children}</NavbarFooterWrapper>
+          </WishlistProvider>
+        </CartProvider>
       </body>
     </html>
   );

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function PrivacyPage() {
   return (
-    <main className="bg-(--color-background-secondary)">
+    <main className="bg-(--color-background-secondary) overflow-x-hidden">
       <div className="max-w-4xl mx-auto px-8 py-16">
         <h1 className="font-display text-4xl mb-8" style={{ color: "var(--color-accent-wilderness)" }}>
           Privacy Policy
@@ -109,8 +109,8 @@ export default function PrivacyPage() {
             </h2>
             <p>
               If you have questions about this Privacy Policy, please contact us at:{" "}
-              <a href="mailto:privacy@lifeinbloom.com" className="text-(--color-accent-olive) underline">
-                privacy@lifeinbloom.com
+              <a href="mailto:privacy@lifeinbloomblog.com" className="text-(--color-accent-olive) underline">
+                privacy@lifeinbloomblog.com
               </a>
             </p>
             <p className="text-sm text-(--color-neutral-grey) mt-4">

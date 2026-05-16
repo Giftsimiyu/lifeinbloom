@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import NewsletterForm from "./newsletterForm";
 
 
 
@@ -10,7 +9,7 @@ export default function Landing() {
   
 
   return (
-    <section className="relative bg-hero-paper min-h-screen flex flex-col justify-between overflow-hidden">
+    <section className="relative bg-hero-paper min-h-screen flex flex-col justify-center overflow-hidden py-16 md:py-24">
       {/* Top-left botanical vine */}
       <motion.div
         className="absolute top-0 left-0 opacity-40 hidden md:block z-0"
@@ -129,7 +128,7 @@ export default function Landing() {
 
         {/* Warm invitation */}
         <motion.p
-          className="text-sm mb-10"
+          className="text-sm mb-6"
           style={{ color: "var(--color-accent-peaches)" }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -140,7 +139,7 @@ export default function Landing() {
 
         {/* Primary CTAs */}
         <motion.div
-          className="flex flex-wrap items-center justify-center gap-4 mb-16 md:mb-20"
+          className="flex flex-wrap items-center justify-center gap-4 mb-8 md:mb-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.6 }}
@@ -161,23 +160,6 @@ export default function Landing() {
         </motion.div>
       </div>
 
-      {/* Newsletter Section */}
-        <motion.div
-          className="w-full max-w-2xl px-6 md:px-8 mt-8 md:mt-12 mx-auto"
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 1.5, duration: 0.6 }}
-        >
-          <div className="bg-(--color-background-secondary) rounded-2xl p-8 md:p-12 border border-(--color-neutral-cream)">
-            <h3 className="font-display text-2xl md:text-3xl text-(--color-accent-wilderness) mb-3 text-center">
-              Join the Bloom
-            </h3>
-            <p className="font-body text-sm text-(--color-neutral-grey) text-center mb-6">
-              Get notified when new posts are published. We share stories on soft living, wellness, fashion, and everything in between.
-            </p>
-            <NewsletterForm variant="full" />
-          </div>
-        </motion.div>
 </section>
   );  
 }

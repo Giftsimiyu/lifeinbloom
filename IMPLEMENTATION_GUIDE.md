@@ -48,10 +48,10 @@ SMTP_PORT=587
 SMTP_USER=your-email@example.com
 SMTP_PASSWORD=your-app-password
 SMTP_SECURE=false
-SMTP_FROM_EMAIL=noreply@lifeinbloom.com
+SMTP_FROM_EMAIL=noreply@lifeinbloomblog.com
 
 # Contact Email (where admin receives submissions)
-CONTACT_EMAIL=hello@lifeinbloom.com
+CONTACT_EMAIL=hello@lifeinbloomblog.com
 ```
 
 ### Email Service Options
@@ -81,7 +81,7 @@ SMTP_PORT=587
 SMTP_USER=apikey
 SMTP_PASSWORD=SG.your-sendgrid-api-key
 SMTP_SECURE=false
-SMTP_FROM_EMAIL=noreply@lifeinbloom.com
+SMTP_FROM_EMAIL=noreply@lifeinbloomblog.com
 ```
 
 #### 3. **Mailgun**
@@ -92,7 +92,7 @@ SMTP_PORT=587
 SMTP_USER=postmaster@yourdomain.mailgun.org
 SMTP_PASSWORD=your-mailgun-password
 SMTP_SECURE=false
-SMTP_FROM_EMAIL=noreply@lifeinbloom.com
+SMTP_FROM_EMAIL=noreply@lifeinbloomblog.com
 ```
 
 #### 4. **Amazon SES**
@@ -103,7 +103,7 @@ SMTP_PORT=587
 SMTP_USER=your-ses-username
 SMTP_PASSWORD=your-ses-password
 SMTP_SECURE=false
-SMTP_FROM_EMAIL=noreply@lifeinbloom.com
+SMTP_FROM_EMAIL=noreply@lifeinbloomblog.com
 ```
 
 ---

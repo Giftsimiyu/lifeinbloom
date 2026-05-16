@@ -9,7 +9,7 @@ export const metadata: Metadata = {
 
 export default function AuthorPage() {
   return (
-    <main className="min-h-screen bg-(--color-background-secondary)">
+    <main className="min-h-screen bg-(--color-background-secondary) overflow-x-hidden">
       {/* Hero Section */}
       <section className="bg-(--color-background-primary) py-20 md:py-32">
         <div className="max-w-4xl mx-auto px-8 text-center">

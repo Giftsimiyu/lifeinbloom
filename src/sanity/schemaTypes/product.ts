@@ -63,7 +63,7 @@ export const product = defineType({
       title: "Price",
       type: "number",
       validation: (Rule) => Rule.required().min(0),
-      description: "Price in USD",
+      description: "Price in KSH",
     }),
     defineField({
       name: "originalPrice",
@@ -79,11 +79,23 @@ export const product = defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: "stock",
-      title: "Stock Count",
-      type: "number",
-      validation: (Rule) => Rule.required().min(0),
-      description: "Number of items available",
+      name: "isDigital",
+      title: "Digital Product",
+      type: "boolean",
+      description: "Check if this is a digital product (no shipping required)",
+    }),
+    defineField({
+      name: "downloadLink",
+      title: "Download Link",
+      type: "url",
+      description: "URL for digital product download (required for digital products)",
+      hidden: ({ parent }) => !parent?.isDigital,
+      validation: (Rule) => Rule.custom((value, context) => {
+        if (context.parent?.isDigital && !value) {
+          return 'Download link is required for digital products'
+        }
+        return true
+      }),
     }),
     defineField({
       name: "featured",
@@ -99,6 +111,47 @@ export const product = defineType({
       options: {
         layout: "tags",
       },
+    }),
+    defineField({
+      name: "isBundle",
+      title: "Product Bundle",
+      type: "boolean",
+      description: "Check if this is a bundle/collection of multiple products",
+    }),
+    defineField({
+      name: "bundleItems",
+      title: "Bundle Items",
+      type: "array",
+      of: [
+        {
+          type: "reference",
+          to: [{ type: "product" }],
+        },
+      ],
+      description: "Products included in this bundle",
+      hidden: ({ parent }) => !parent?.isBundle,
+      validation: (Rule) => Rule.custom((value, context) => {
+        if (context.parent?.isBundle && (!value || value.length === 0)) {
+          return 'Bundle items are required for product bundles'
+        }
+        return true
+      }),
+    }),
+    defineField({
+      name: "bundlePrice",
+      title: "Bundle Price",
+      type: "number",
+      description: "Special price for the bundle (optional - leave empty to calculate from individual items)",
+      hidden: ({ parent }) => !parent?.isBundle,
+      validation: (Rule) => Rule.min(0),
+    }),
+    defineField({
+      name: "bundleDescription",
+      title: "Bundle Description",
+      type: "text",
+      rows: 3,
+      description: "Special description for the bundle offer",
+      hidden: ({ parent }) => !parent?.isBundle,
     }),
     defineField({
       name: "publishedAt",

@@ -33,7 +33,7 @@ During development, you can use the default `onboarding@resend.dev` email (alrea
 1. Add your custom domain to Resend
 2. Follow Resend's DNS verification steps
 3. Set `RESEND_FROM_EMAIL` to an email address using your verified domain
-4. Example: `noreply@lifeinbloom.com`
+4. Example: `noreply@lifeinbloomblog.com`
 
 ## Email Routes Updated
 

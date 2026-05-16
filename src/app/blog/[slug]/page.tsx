@@ -5,7 +5,7 @@ import {
   getRelatedPostsByTags,
   getAllPosts,
 } from "../../../sanity/lib/sanity";
-import { getCommentCounts } from "@/sanity/lib/comments";
+import { getCommentCounts, getCommentCountForPost } from "@/sanity/lib/comments";
 import BlogPostView from "../../components/blogPostView";
 import { urlFor } from "@/sanity/lib/image";
 
@@ -47,6 +47,9 @@ export default async function BlogPostPage({
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
+  // retrieve comment count for current post so the indicator link shows accurate number
+  const thisPostCommentCount = await getCommentCountForPost(slug);
+
   let relatedPosts = [];
 
   // Try to get related posts by tags first (more intelligent matching)
@@ -68,5 +71,11 @@ export default async function BlogPostPage({
     }));
   }
 
-  return <BlogPostView post={post} relatedPosts={relatedPosts} />;
+  return (
+    <BlogPostView
+      post={post}
+      commentCount={thisPostCommentCount}
+      relatedPosts={relatedPosts}
+    />
+  );
 }

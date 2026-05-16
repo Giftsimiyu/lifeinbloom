@@ -424,6 +424,17 @@ export async function getFeaturedProducts(limit: number = 6) {
       "image": image.asset->url,
       price,
       originalPrice,
+      isDigital,
+      downloadLink,
+      isBundle,
+      bundleItems[]->{
+        title,
+        "slug": slug.current,
+        price,
+        isDigital
+      },
+      bundlePrice,
+      bundleDescription,
       category->{
         title,
         "slug": slug.current
@@ -442,6 +453,17 @@ export async function getAllProducts(limit: number = 24, offset: number = 0) {
       price,
       originalPrice,
       stock,
+      isDigital,
+      downloadLink,
+      isBundle,
+      bundleItems[]->{
+        title,
+        "slug": slug.current,
+        price,
+        isDigital
+      },
+      bundlePrice,
+      bundleDescription,
       category->{
         title,
         "slug": slug.current
@@ -466,6 +488,17 @@ export async function getProductsByCategory(categorySlug: string, limit: number 
       price,
       originalPrice,
       stock,
+      isDigital,
+      downloadLink,
+      isBundle,
+      bundleItems[]->{
+        title,
+        "slug": slug.current,
+        price,
+        isDigital
+      },
+      bundlePrice,
+      bundleDescription,
       category->{
         title,
         "slug": slug.current
@@ -497,6 +530,20 @@ export async function getProductBySlug(slug: string) {
       price,
       originalPrice,
       stock,
+      isDigital,
+      downloadLink,
+      isBundle,
+      bundleItems[]->{
+        title,
+        "slug": slug.current,
+        description,
+        "image": image.asset->url,
+        price,
+        isDigital,
+        downloadLink
+      },
+      bundlePrice,
+      bundleDescription,
       category->{
         title,
         "slug": slug.current
@@ -538,6 +585,17 @@ export async function searchProducts(query: string) {
       "image": image.asset->url,
       price,
       originalPrice,
+      isDigital,
+      downloadLink,
+      isBundle,
+      bundleItems[]->{
+        title,
+        "slug": slug.current,
+        price,
+        isDigital
+      },
+      bundlePrice,
+      bundleDescription,
       category->{
         title,
         "slug": slug.current

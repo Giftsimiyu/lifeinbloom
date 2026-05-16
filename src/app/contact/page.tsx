@@ -18,7 +18,7 @@ import {
 
 export default function ContactPage() {
   return (
-    <main className="min-h-screen bg-(--color-background-secondary)">
+    <main className="min-h-screen bg-(--color-background-secondary) overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative bg-(--color-background-primary) py-16 md:py-24 overflow-hidden">
         {/* 3D Elements */}
@@ -49,7 +49,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Form Section */}
-      <section className="py-20 relative">
+      <section className="py-20 relative overflow-x-hidden">
         <GlowingAccent position="bottom-left" size={280} color="terracotta" />
         <div className="max-w-2xl mx-auto px-8 relative z-10">
           <motion.div 
@@ -73,7 +73,7 @@ export default function ContactPage() {
       </section>
 
       {/* Contact Info Section */}
-      <section className="bg-(--color-background-primary) py-20 relative">
+      <section className="bg-(--color-background-primary) py-20 relative overflow-x-hidden">
         <GlowingAccent position="top-right" size={250} color="sage" />
         <div className="max-w-4xl mx-auto px-8 relative z-10">
           <h2 className="font-display text-2xl text-(--color-accent-wilderness) mb-12 text-center">
@@ -109,7 +109,7 @@ export default function ContactPage() {
                 Email
               </h3>
               <p className="font-body text-(--color-neutral-grey)">
-                hello@lifeinbloom.com
+                hello@mail.lifeinbloomblog.com
               </p>
             </motion.div>
 
@@ -181,30 +181,7 @@ export default function ContactPage() {
               </div>
             </motion.div>
 
-            {/*<div className="text-center">
-              <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-(--color-accent-olive)/10 mb-4">
-                <svg
-                  className="w-6 h-6 text-(--color-accent-olive)"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2s9 5 20 5a9.5 9.5 0 00-9-5.5c4.75 2.25 7-7 7-7" />
-                </svg>
-              </div>
-              <h3 className="font-display text-lg text-(--color-accent-wilderness) mb-2">
-                Follow Us
-              </h3>
-              <div className="space-y-2">
-                <p className="font-body text-(--color-neutral-grey) text-sm">
-                  @lifeinbloomblog
-                </p>
-                <p className="font-body text-xs text-(--color-neutral-grey)">
-                  Instagram • Pinterest • Twitter
-                </p>
-              </div>
-            </div>*/}
+            
           </div>
         </div>
       </section>

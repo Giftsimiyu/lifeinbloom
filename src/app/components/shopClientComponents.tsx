@@ -45,6 +45,11 @@ export function FeaturedProductsSection({ products }: FeaturedProductsProps) {
                   image={product.image}
                   price={product.price}
                   originalPrice={product.originalPrice}
+                  isDigital={product.isDigital}
+                  isBundle={product.isBundle}
+                  bundleItems={product.bundleItems}
+                  bundlePrice={product.bundlePrice}
+                  bundleDescription={product.bundleDescription}
                   category={product.category}
                 />
               </Card3d>
@@ -72,18 +77,18 @@ export function CategoryFilter({ categories }: CategoryFilterProps) {
       <h3 className="font-display text-lg mb-6" style={{ color: "var(--color-accent-wilderness)" }}>
         Browse by Category
       </h3>
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3 items-stretch">
         {categories.map((cat: any) => (
-          <Link key={cat.slug} href={`/shop?category=${cat.slug}`}>
+          <Link key={cat.slug} href={`/shop?category=${cat.slug}`} className="h-full">
             <motion.div
-              className="p-6 rounded-lg bg-white hover:shadow-lg transition-shadow cursor-pointer"
+              className="p-6 rounded-lg bg-white hover:shadow-lg transition-shadow cursor-pointer h-full flex flex-col"
               whileHover={{ y: -2 }}
             >
-              <h4 className="font-display text-(--color-accent-wilderness) hover:text-(--color-accent-olive) transition-colors">
+              <h4 className="font-display text-[var(--color-accent-wilderness)] hover:text-[var(--color-accent-olive)] transition-colors">
                 {cat.title}
               </h4>
               {cat.description && (
-                <p className="text-sm text-(--color-neutral-grey) mt-2">{cat.description}</p>
+                <p className="text-sm text-[var(--color-neutral-grey)] mt-2 flex-grow">{cat.description}</p>
               )}
             </motion.div>
           </Link>
@@ -112,7 +117,7 @@ export function ProductsGrid({ products, currentPage, totalPages, category }: Pr
         <h2 className="font-display text-3xl md:text-4xl" style={{ color: "var(--color-accent-wilderness)" }}>
           All Products
         </h2>
-        <p className="text-sm text-(--color-neutral-grey) mt-2">
+        <p className="text-sm text-[var(--color-neutral-grey)] mt-2">
           Page {currentPage} of {totalPages}
         </p>
       </div>
@@ -135,6 +140,11 @@ export function ProductsGrid({ products, currentPage, totalPages, category }: Pr
                   image={product.image}
                   price={product.price}
                   originalPrice={product.originalPrice}
+                  isDigital={product.isDigital}
+                  isBundle={product.isBundle}
+                  bundleItems={product.bundleItems}
+                  bundlePrice={product.bundlePrice}
+                  bundleDescription={product.bundleDescription}
                   category={product.category}
                 />
               </motion.div>
@@ -147,7 +157,7 @@ export function ProductsGrid({ products, currentPage, totalPages, category }: Pr
               {currentPage > 1 && (
                 <Link
                   href={`/shop?page=${currentPage - 1}${category ? `&category=${category}` : ""}`}
-                  className="px-4 py-2 rounded border border-(--color-accent-olive) text-(--color-accent-olive) hover:bg-(--color-accent-olive) hover:text-white transition-colors"
+                  className="px-4 py-2 rounded border border-[var(--color-accent-olive)] text-[var(--color-accent-olive)] hover:bg-[var(--color-accent-olive)] hover:text-white transition-colors"
                 >
                   Previous
                 </Link>
@@ -162,8 +172,8 @@ export function ProductsGrid({ products, currentPage, totalPages, category }: Pr
                       href={`/shop?page=${pageNum}${category ? `&category=${category}` : ""}`}
                       className={`px-3 py-2 rounded transition-colors ${
                         pageNum === currentPage
-                          ? "bg-(--color-accent-olive) text-white"
-                          : "border border-(--color-neutral-cream) hover:bg-(--color-neutral-cream)"
+                          ? "bg-[var(--color-accent-olive)] text-white"
+                          : "border border-[var(--color-neutral-cream)] hover:bg-[var(--color-neutral-cream)]"
                       }`}
                     >
                       {pageNum}
@@ -175,7 +185,7 @@ export function ProductsGrid({ products, currentPage, totalPages, category }: Pr
               {currentPage < totalPages && (
                 <Link
                   href={`/shop?page=${currentPage + 1}${category ? `&category=${category}` : ""}`}
-                  className="px-4 py-2 rounded border border-(--color-accent-olive) text-(--color-accent-olive) hover:bg-(--color-accent-olive) hover:text-white transition-colors"
+                  className="px-4 py-2 rounded border border-[var(--color-accent-olive)] text-[var(--color-accent-olive)] hover:bg-[var(--color-accent-olive)] hover:text-white transition-colors"
                 >
                   Next
                 </Link>
@@ -185,13 +195,13 @@ export function ProductsGrid({ products, currentPage, totalPages, category }: Pr
         </>
       ) : (
         <div className="text-center py-20">
-          <p className="font-display text-2xl text-(--color-accent-wilderness) mb-4">
+          <p className="font-display text-2xl text-[var(--color-accent-wilderness)] mb-4">
             No products found
           </p>
-          <p className="text-(--color-neutral-grey) mb-8">
+          <p className="text-[var(--color-neutral-grey)] mb-8">
             Check back soon for new items or explore other categories.
           </p>
-          <Link href="/shop" className="inline-block px-6 py-3 bg-(--color-accent-wilderness) text-white rounded hover:bg-(--color-accent-olive) transition-colors">
+          <Link href="/shop" className="inline-block px-6 py-3 bg-[var(--color-accent-wilderness)] text-white rounded hover:bg-[var(--color-accent-olive)] transition-colors">
             View All Products
           </Link>
         </div>

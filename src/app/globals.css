@@ -50,6 +50,7 @@ body {
   color: var(--color-neutral-grey);
   font-family: var(--font-inter), serif;
   lineheight: 1.75;
+  overflow-x: hidden;
 }
 
 .container {

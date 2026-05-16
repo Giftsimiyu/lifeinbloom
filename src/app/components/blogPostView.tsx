@@ -8,6 +8,7 @@ import ImageGallery from "./imageGallery";
 import NewsletterPrompt from "./newsletterPrompt";
 import PostSidebar from "./postSidebar";
 import TableOfContentsDropdown from "./tableOfContentsDropdown";
+import SocialShare from "./socialShare";
 import { calculateReadingTimeFromPortableText, formatReadingTime } from "@/lib/readingTime";
 
 type GalleryImage = {
@@ -45,6 +46,8 @@ type BlogPostViewProps = {
     };
     gallery?: GalleryImage[];
   };
+  // new prop for the current post's comment count (used for jump link)
+  commentCount?: number;
   relatedPosts?: Array<{
     title: string;
     slug: string;
@@ -152,6 +155,7 @@ const portableTextComponents = {
 
 export default function BlogPostView({
   post,
+  commentCount = 0,
   relatedPosts = [],
 }: BlogPostViewProps) {
   const imageUrl = post.coverImage ? urlFor(post.coverImage).url() : null;
@@ -270,7 +274,21 @@ export default function BlogPostView({
             )}
           </div>
 
-         
+          {/* quick jump links for comments */}
+          <div className="flex items-center gap-4 mb-16">
+            <a
+              href="#comments-section"
+              className="text-sm font-medium text-(--color-accent-olive) hover:underline"
+            >
+              💬 {commentCount} {commentCount === 1 ? "Comment" : "Comments"}
+            </a>
+            <a
+              href="#comments-section"
+              className="btn btn-secondary btn-sm"
+            >
+              Leave a comment
+            </a>
+          </div>
         </div>
 
         {/* Right Sidebar - 1 column */}
@@ -386,8 +404,69 @@ export default function BlogPostView({
         </section>
       )}
 
+      {/* Mobile author/share (appears before comments) */}
+      <div className="lg:hidden px-8 space-y-10">
+        {post.author && (
+          <div className="text-center bg-(--color-background-secondary) rounded-2xl p-8 border border-(--color-neutral-cream)">
+            <div className="flex justify-center mb-6">
+              {post.author.image ? (
+                <img
+                  src={urlFor(post.author.image).width(128).height(128).url()}
+                  alt={post.author.name}
+                  className="w-32 h-32 rounded-full object-cover border-4 border-(--color-accent-olive) shadow-lg"
+                />
+              ) : (
+                <div className="w-32 h-32 rounded-full bg-(--color-neutral-cream) border-4 border-(--color-accent-olive) flex items-center justify-center shadow-lg">
+                  <span className="text-4xl text-(--color-neutral-grey) font-bold">
+                    {post.author.name.charAt(0).toUpperCase()}
+                  </span>
+                </div>
+              )}
+            </div>
+            <h3 className="font-display text-lg text-(--color-accent-wilderness) mb-3">
+              About the Author
+            </h3>
+            <p className="text-sm font-semibold text-(--color-accent-olive) mb-3">
+              {post.author.name}
+            </p>
+            {post.author.bio && (
+              Array.isArray(post.author.bio) ? (
+                <div className="prose prose-sm max-w-none mb-6 line-clamp-3 text-(--color-neutral-grey)">
+                  <PortableText value={post.author.bio} />
+                </div>
+              ) : (
+                <div className="prose prose-sm max-w-none mb-6 line-clamp-3 text-(--color-neutral-grey)">
+                  <p>{post.author.bio}</p>
+                </div>
+              )
+            )}
+            <Link
+              href="/about/the-author"
+              className="inline-block text-sm font-semibold text-(--color-accent-olive) hover:text-(--color-accent-wilderness) transition-colors border-b border-(--color-accent-olive) hover:border-(--color-accent-wilderness)"
+            >
+              Learn more about the author →
+            </Link>
+          </div>
+        )}
+
+        {/* mobile share */}
+        <div className="bg-(--color-background-secondary) rounded-2xl p-6 border border-(--color-neutral-cream)">
+          <h3 className="font-display text-lg text-(--color-accent-wilderness) mb-4">
+            Share This
+          </h3>
+          <SocialShare
+            title={post.title}
+            slug={post.slug}
+            excerpt={post.excerpt}
+          />
+        </div>
+      </div>
+
       {/* Comments Section */}
-      <section className="bg-(--color-background-primary) py-20">
+      <section
+        id="comments-section"
+        className="bg-(--color-background-primary) py-20"
+      >
         <div className="max-w-6xl mx-auto px-8">
           <h2 className="font-display text-3xl text-(--color-accent-wilderness) mb-12">
             Reader Comments

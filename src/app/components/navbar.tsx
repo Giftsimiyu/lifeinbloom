@@ -1,15 +1,25 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import AnnouncementStrip from "./announcementStrip";
+import CartDropdown from "./cartDropdown";
+import WishlistDropdown from "./wishlistDropdown";
+import { HiOutlineMenu, HiOutlineSearch, HiOutlineX, HiOutlineChevronDown } from "react-icons/hi";
+import { HiOutlineShoppingBag } from "react-icons/hi";
 
 export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
+
+  // close navigation menu when search is opened
+  useEffect(() => {
+    if (searchOpen) setMenuOpen(false);
+  }, [searchOpen]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -49,38 +59,77 @@ export default function Navbar() {
         >
           {!searchOpen && (
             <>
-              <Link
+              {/* mobile hamburger */}
+              <button
+                type="button"
+                className="md:hidden p-2 mr-4"
+                onClick={() => setMenuOpen((v) => !v)}
+                aria-label="Toggle menu"
+              >
+                <HiOutlineMenu className="h-6 w-6 text-[var(--color-neutral-grey)]" />
+              </button>
+              {/* mobile dropdown */}
+              {menuOpen && (
+                <div className="absolute top-full left-0 w-full bg-[var(--color-background-secondary)] border-t border-[var(--color-neutral-cream)] md:hidden z-40">
+                  <div className="flex flex-col items-center py-4 space-y-4">
+                    <Link href="/home" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Home</Link>
+                    <Link href="/shop" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Shop</Link>
+                    <Link href="/about" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">About</Link>
+                    <Link href="/contact" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Contact</Link>
+                    <Link href="/suggest" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Suggest</Link>
+                  </div>
+                </div>
+              )}
+              <div className="hidden md:flex md:items-center"
+                onClick={() => setMenuOpen(false)}
+              >
+                <Link
                 href="/home"
-                className="font-body text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors mr-6 md:mr-8"
                 role="link"
               >
                 Home
               </Link>
 
-              <Link
-                href="/shop"
-                className="font-body text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors ml-6 md:ml-8"
-              >
-                Shop
-              </Link>
+              <div className="relative group mr-6 md:mr-8">
+                <button className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors flex items-center gap-1">
+                  Shop
+                  <HiOutlineChevronDown className="h-4 w-4" />
+                </button>
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 rounded-xl border border-[var(--color-neutral-cream)] bg-[var(--color-background-primary)] shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
+                  <Link
+                    href="/shop"
+                    className="flex items-center gap-3 py-3 px-4 rounded-t-xl hover:bg-[var(--color-background-secondary)] text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
+                  >
+                    <HiOutlineSearch className="h-5 w-5" />
+                    Browse Shop
+                  </Link>
+                  <div className="border-t border-[var(--color-neutral-cream)]">
+                    <CartDropdown />
+                  </div>
+                  <div className="border-t border-[var(--color-neutral-cream)]">
+                    <WishlistDropdown />
+                  </div>
+                </div>
+              </div>
 
-              <div className="relative group ml-6 md:ml-8">
+              <div className="relative group mr-6 md:mr-8">
                 <Link
                   href="/about"
-                  className="font-body text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                  className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
                 >
                   About
                 </Link>
-                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-(--color-neutral-cream) bg-(--color-background-primary) shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
+                <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-[var(--color-neutral-cream)] bg-[var(--color-background-primary)] shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
                   <Link
                     href="/about"
-                    className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                    className="block py-2 px-3 rounded hover:bg-[var(--color-background-secondary)] text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
                   >
                     The Blog
                   </Link>
                   <Link
                     href="/about/the-author"
-                    className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                    className="block py-2 px-3 rounded hover:bg-[var(--color-background-secondary)] text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
                   >
                     The Author
                   </Link>
@@ -89,10 +138,17 @@ export default function Navbar() {
 
               <Link
                 href="/contact"
-                className="font-body text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors ml-6 md:ml-8"
+                className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors mr-6 md:mr-8"
               >
                 Contact
               </Link>
+              <Link
+                href="/suggest"
+                className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
+              >
+                Suggest
+              </Link>
+            </div>
             </>
           )}
 
@@ -110,40 +166,23 @@ export default function Navbar() {
                     placeholder="Search posts..."
                     value={searchQuery}
                     onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full px-4 py-3 bg-(--color-background-primary) border-2 border-(--color-accent-olive) rounded-full font-body text-sm placeholder-opacity-60 focus:outline-none focus:border-(--color-accent-wilderness) transition-all duration-200 shadow-sm"
+                    className="w-full px-4 py-3 bg-[var(--color-background-primary)] border-2 border-[var(--color-accent-olive)] rounded-full font-body text-sm placeholder-opacity-60 focus:outline-none focus:border-[var(--color-accent-wilderness)] transition-all duration-200 shadow-sm"
                     autoFocus
                   />
                   <button
                     type="submit"
-                    className="absolute right-3 p-2 text-(--color-accent-olive) hover:text-(--color-accent-wilderness) transition-colors"
+                    className="absolute right-3 p-2 text-[var(--color-accent-olive)] hover:text-[var(--color-accent-wilderness)] transition-colors"
                     aria-label="Search"
                   >
-                    <svg
-                      className="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <circle cx="11" cy="11" r="8" />
-                      <path d="m21 21-4.35-4.35" />
-                    </svg>
+                    <HiOutlineSearch className="h-5 w-5" />
                   </button>
                   <button
                     type="button"
                     onClick={() => setSearchOpen(false)}
-                    className="absolute -right-10 p-2 text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                    className="absolute -right-10 p-2 text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
                     aria-label="Close search"
                   >
-                    <svg
-                      className="h-5 w-5"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="2"
-                    >
-                      <path d="M6 18L18 6M6 6l12 12" />
-                    </svg>
+                    <HiOutlineX className="h-5 w-5" />
                   </button>
                 </div>
               </form>
@@ -152,18 +191,9 @@ export default function Navbar() {
                 type="button"
                 onClick={() => setSearchOpen(true)}
                 aria-label="Search"
-                className="p-2 text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                className="p-2 text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
               >
-                <svg
-                  className="h-5 w-5"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <circle cx="11" cy="11" r="8" />
-                  <path d="m21 21-4.35-4.35" />
-                </svg>
+                <HiOutlineSearch className="h-5 w-5" />
               </button>
             )}
           </div>
@@ -173,9 +203,9 @@ export default function Navbar() {
       {/* Category Navigation Bar */}
       <nav
         aria-label="Category navigation"
-        className="border-t border-(--color-neutral-cream) bg-(--color-background-primary) py-4"
+        className="border-t border-[var(--color-neutral-cream)] bg-[var(--color-background-primary)] py-4"
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-8 flex flex-wrap justify-center gap-3 md:gap-4">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 flex flex-wrap justify-center gap-3 md:gap-4 overflow-x-auto">
           {/* Velvet & Vine */}
           <div className="relative group">
             <Link
@@ -184,23 +214,23 @@ export default function Navbar() {
             >
               Velvet & Vine
             </Link>
-            <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-(--color-neutral-cream) bg-(--color-background-primary) shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
+            <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-48 rounded-xl border border-[var(--color-neutral-cream)] bg-[var(--color-background-primary)] shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
               <div className="p-4 space-y-2">
                 <Link
                   href="/subcategory/the-style-edit"
-                  className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                  className="block py-2 px-3 rounded hover:bg-[var(--color-background-secondary)] text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
                 >
                   The Style Edit
                 </Link>
                 <Link
                   href="/subcategory/glow-and-grow"
-                  className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                  className="block py-2 px-3 rounded hover:bg-[var(--color-background-secondary)] text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
                 >
                   Glow & Grow
                 </Link>
                 <Link
                   href="/subcategory/the-wardrobe"
-                  className="block py-2 px-3 rounded hover:bg-(--color-background-secondary) text-sm text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors"
+                  className="block py-2 px-3 rounded hover:bg-[var(--color-background-secondary)] text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
                 >
                   The Wardrobe
                 </Link>

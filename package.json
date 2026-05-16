@@ -23,27 +23,25 @@
     "next-sitemap": "^4.2.3",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-icons": "^5.5.0",
+    "react-icons": "^5.6.0",
     "resend": "^6.9.1",
     "sanity": "^4.22.0",
     "styled-components": "^6.3.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
+    "@testing-library/jest-dom": "^6.0.0",
+    "@testing-library/react": "^14.0.0",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
     "eslint": "^9",
     "eslint-config-next": "16.1.1",
+    "eslint-plugin-jsx-a11y": "^6.7.1",
+    "jsdom": "^22.0.0",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^1.0.0",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/jest-dom": "^6.0.0",
-    "jsdom": "^22.0.0",
-    "eslint-plugin-jsx-a11y": "^6.7.1",
-    "jest-axe": "^7.1.1",
-    "axe-core": "^4.8.0"
+    "vitest": "^1.0.0"
   }
 }

@@ -111,7 +111,13 @@ export default function Home() {
               </h1>
             </div>
 
-            <div className="max-w-xl mx-auto">
+            <div className="max-w-xl mx-auto space-y-4">
+              <p
+                className="text-base md:text-lg leading-relaxed "
+                style={{ color: "var(--color-neutral-grey)" }}
+              >
+                A cozy corner of the internet that explores the beauty of living.
+              </p>
               <p
                 className="text-base md:text-lg leading-relaxed"
                 style={{ color: "var(--color-neutral-grey)" }}

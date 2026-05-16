@@ -14,7 +14,7 @@ export default async function BlogPage() {
   const commentCounts = await getCommentCounts(posts.map((p: any) => p.slug));
 
   return (
-    <main className="relative bg-(--color-background-secondary) py-20">
+    <main className="relative bg-(--color-background-secondary) py-20 overflow-x-hidden">
       <div className="max-w-6xl mx-auto px-8">
         <div className="mb-12 text-center">
           <h1 className="font-display text-3xl md:text-4xl text-(--color-accent-wilderness)">Blog</h1>

@@ -7,7 +7,7 @@ export const metadata: Metadata = {
 
 export default function TermsPage() {
   return (
-    <main className="bg-(--color-background-secondary)">
+    <main className="bg-(--color-background-secondary) overflow-x-hidden">
       <div className="max-w-4xl mx-auto px-8 py-16">
         <h1 className="font-display text-4xl mb-8" style={{ color: "var(--color-accent-wilderness)" }}>
           Terms of Service
@@ -127,8 +127,8 @@ export default function TermsPage() {
             </h2>
             <p>
               If you have any questions about these Terms of Service, please contact us at:{" "}
-              <a href="mailto:legal@lifeinbloom.com" className="text-(--color-accent-olive) underline">
-                legal@lifeinbloom.com
+              <a href="mailto:legal@lifeinbloomblog.com" className="text-(--color-accent-olive) underline">
+                legal@lifeinbloomblog.com
               </a>
             </p>
             <p className="text-sm text-(--color-neutral-grey) mt-4">

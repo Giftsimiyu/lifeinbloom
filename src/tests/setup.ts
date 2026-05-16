@@ -1,6 +1,10 @@
 import '@testing-library/jest-dom'
-import { toHaveNoViolations } from 'jest-axe'
+import { vi } from 'vitest'
 
-expect.extend(toHaveNoViolations)
+// simple fetch mock using vitest
 
-// global mocks can go here
+declare global {
+  var fetch: ReturnType<typeof vi.fn>
+}
+
+global.fetch = vi.fn() as any;

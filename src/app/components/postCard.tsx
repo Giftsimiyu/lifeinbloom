@@ -35,7 +35,7 @@ export default function PostCard({
 
   return (
     <motion.article 
-      className="group card overflow-hidden rounded-2xl transition-shadow hover:shadow-lg p-6 md:p-10 bg-(--color-background-primary)"
+      className="group card overflow-hidden rounded-2xl transition-shadow hover:shadow-lg p-6 md:p-10 bg-(--color-background-primary) flex flex-col h-full min-h-[500px]"
       style={{ perspective: '1200px' }}
       whileHover={{
         y: -5,
@@ -45,37 +45,37 @@ export default function PostCard({
     >
       {/* Hero image */}
       {image && (
-        <figure className="mb-10 overflow-hidden rounded-lg">
+        <figure className="mb-6 overflow-hidden rounded-lg -mx-6 -mt-6 md:-mx-10 md:-mt-10 flex-shrink-0">
           <Link href={`/blog/${slug}`} className="block">
             <img
               src={image}
               alt={title}
               loading="lazy"
-              className="h-72 md:h-80 w-full object-cover transition duration-500 group-hover:scale-105"
+              className="h-48 md:h-56 w-full object-cover transition duration-500 group-hover:scale-105"
             />
           </Link>
         </figure>
       )}
 
-      <div className="pb-2">
-        <header className="mb-3">
+      <div className="flex-1 flex flex-col pb-2">
+        <header className="mb-3 flex-shrink-0">
           <p className="mb-2 text-xs uppercase tracking-wide text-(--color-accent-olive)">
             {category}
           </p>
 
-            <h2 className="font-display text-2xl md:text-2xl leading-snug text-(--color-accent-wilderness) mb-2">
+          <h2 className="font-display text-xl md:text-2xl leading-tight text-(--color-accent-wilderness) mb-2 line-clamp-2">
             <Link href={`/blog/${slug}`} className="group-hover:underline">
               {title}
             </Link>
           </h2>
         </header>
 
-        <p className="font-body text-sm text-(--color-neutral-grey) leading-relaxed mb-4">
+        <p className="font-body text-sm text-(--color-neutral-grey) leading-relaxed mb-4 line-clamp-3 flex-grow">
           {trimmedExcerpt}
         </p>
 
         {/* Reading time, published date, and comment count */}
-        <div className="flex flex-wrap gap-4 mb-4 text-xs text-(--color-neutral-grey)">
+        <div className="flex flex-wrap gap-4 mb-4 text-xs text-(--color-neutral-grey) flex-shrink-0">
           {content && (
             <span className="flex items-center gap-1">
               ⏱️ {formatReadingTime(calculateReadingTimeFromPortableText(content))}
@@ -99,7 +99,7 @@ export default function PostCard({
           )}
         </div>
 
-        <footer>
+        <footer className="flex-shrink-0">
           <Link
             href={`/blog/${slug}`}
             className="btn btn-secondary btn-sm"

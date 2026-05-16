@@ -9,7 +9,7 @@ import GlowingAccent from "@/app/components/glowingAccent";
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-(--color-background-secondary)">
+    <main className="min-h-screen bg-(--color-background-secondary) overflow-x-hidden">
       {/* Hero Section */}
       <section className="relative bg-(--color-background-primary) py-20 md:py-32 overflow-hidden">
         {/* 3D Decorative elements */}
@@ -33,8 +33,9 @@ export default function AboutPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            A cozy corner of the internet dedicated to soft living,
-            self-discovery, and finding beauty in the everyday.
+            <p className="mb-4">Life in Bloom is where everyday life is allowed to be enough. Here, we talk about style that feels personal, homes that feel lived in, and the quiet work of becoming happy in a world that constantly asks for more.</p>
+
+            <p>This blog was created as a space to connect with different people around the world, inspire you to live a happier and meaningful life on your own terms, offload those heavy thoughts that constantly pull you down. It is as much for you as it is for me. I hope you find something here that makes you feel a little less alone, a little more inspired, and a little more ready to bloom in your own way.</p>
           </motion.p>
         </div>
       </section>
@@ -57,7 +58,7 @@ export default function AboutPage() {
                 Life in Bloom exists to create a sanctuary where you can slow
                 down, breathe, and reconnect with what truly matters. We believe
                 that beauty isn't just in the extraordinary—it's woven into the
-                quiet moments, the cozy corners, and the intentional choices we
+                simple and quiet moments, and the intentional choices we
                 make every day.
               </p>
               <p className="font-body text-base text-(--color-neutral-dark) leading-relaxed">

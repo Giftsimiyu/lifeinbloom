@@ -6,13 +6,14 @@ interface GlowingAccentProps {
   size?: number;
   position?: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right';
   opacity?: number;
-  color?: 'olive' | 'terracotta' | 'sage';
+  color?: 'olive' | 'terracotta' | 'sage' | 'wilderness';
 }
 
 const colorMap = {
   olive: 'var(--color-accent-olive)',
   terracotta: 'var(--color-accent-terracotta)',
   sage: 'var(--color-accent-sage)',
+  wilderness: 'var(--color-accent-wilderness)',
 };
 
 export default function GlowingAccent({
