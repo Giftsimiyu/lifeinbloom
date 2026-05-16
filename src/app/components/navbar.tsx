@@ -57,6 +57,14 @@ export default function Navbar() {
           className={`flex items-center transition-all duration-300 ${searchOpen ? "w-full md:w-3/4" : ""}`}
           aria-label="Primary navigation"
         >
+          {/* Backdrop */}
+{/* Backdrop (only below navbar) */}
+<div
+  className={`fixed inset-0 top-[80px] bg-black/20 backdrop-blur-sm transition-opacity duration-300 md:hidden z-40 ${
+    menuOpen ? "opacity-100 visible" : "opacity-0 invisible"
+  }`}
+  onClick={() => setMenuOpen(false)}
+/>
           {!searchOpen && (
             <>
               {/* mobile hamburger */}
@@ -66,20 +74,41 @@ export default function Navbar() {
                 onClick={() => setMenuOpen((v) => !v)}
                 aria-label="Toggle menu"
               >
-                <HiOutlineMenu className="h-6 w-6 text-[var(--color-neutral-grey)]" />
+                {menuOpen ? (
+  <HiOutlineX className="h-6 w-6 text-[var(--color-neutral-grey)]" />
+) : (
+  <HiOutlineMenu className="h-6 w-6 text-[var(--color-neutral-grey)]" />
+)}
               </button>
               {/* mobile dropdown */}
-              {menuOpen && (
-                <div className="absolute top-full left-0 w-full bg-[var(--color-background-secondary)] border-t border-[var(--color-neutral-cream)] md:hidden z-40">
-                  <div className="flex flex-col items-center py-4 space-y-4">
-                    <Link href="/home" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Home</Link>
-                    <Link href="/shop" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Shop</Link>
-                    <Link href="/about" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">About</Link>
-                    <Link href="/contact" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Contact</Link>
-                    <Link href="/suggest" className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors">Suggest</Link>
-                  </div>
-                </div>
-              )}
+<div
+  className={`fixed top-[80px] left-0 w-full md:hidden z-50 
+  bg-[var(--color-background-primary)]/90 backdrop-blur-md border-t border-[var(--color-neutral-cream)]
+  transform transition-all duration-300 ease-out
+  ${
+    menuOpen
+      ? "translate-y-0 opacity-100"
+      : "-translate-y-6 opacity-0 pointer-events-none"
+  }`}
+>
+  <div className="flex flex-col items-center py-10 space-y-7 min-h-[70vh]">
+    <Link onClick={() => setMenuOpen(false)} href="/home" className="text-sm">
+      Home
+    </Link>
+    <Link onClick={() => setMenuOpen(false)} href="/shop" className="text-sm">
+      Shop
+    </Link>
+    <Link onClick={() => setMenuOpen(false)} href="/about" className="text-sm">
+      About
+    </Link>
+    <Link onClick={() => setMenuOpen(false)} href="/contact" className="text-sm">
+      Contact
+    </Link>
+    <Link onClick={() => setMenuOpen(false)} href="/suggest" className="text-sm">
+      Suggest
+    </Link>
+  </div>
+</div>
               <div className="hidden md:flex md:items-center"
                 onClick={() => setMenuOpen(false)}
               >
@@ -203,9 +232,9 @@ export default function Navbar() {
       {/* Category Navigation Bar */}
       <nav
         aria-label="Category navigation"
-        className="border-t border-[var(--color-neutral-cream)] bg-[var(--color-background-primary)] py-4"
+        className="border-t border-[var(--color-neutral-cream)] bg-[var(--color-background-primary)] py-4 overflow-hidden"
       >
-        <div className="max-w-7xl mx-auto px-6 md:px-8 flex flex-wrap justify-center gap-3 md:gap-4 overflow-x-auto">
+        <div className="max-w-7xl mx-auto px-6 md:px-8 w-full flex flex-wrap justify-center gap-3 md:gap-4 overflow-hidden [touch-action:pan-y]">
           {/* Velvet & Vine */}
           <div className="relative group">
             <Link

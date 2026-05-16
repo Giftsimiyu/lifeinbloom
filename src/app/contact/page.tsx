@@ -10,9 +10,9 @@ import {
   FaEnvelope,
   FaInstagram,
   FaPinterest,
-  FaTwitter,
   FaLinkedin,
 } from "react-icons/fa";
+import { FaXTwitter } from "react-icons/fa6";
 
 
 
@@ -166,7 +166,7 @@ export default function ContactPage() {
                     whileHover={{ scale: 1.2, rotate: 12 }}
                     transition={{ type: 'spring', stiffness: 400 }}
                   >
-                    <FaTwitter className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
+                    <FaXTwitter className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
                   </motion.a>
                   <motion.a 
                     href="/" 
