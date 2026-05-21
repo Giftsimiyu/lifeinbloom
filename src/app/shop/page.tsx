@@ -42,7 +42,7 @@ export default async function ShopPage({
   const totalPages = Math.ceil(totalCount / PRODUCTS_PER_PAGE);
 
   return (
-    <main className="bg-(--color-background-secondary) overflow-x-visible">
+    <main className="bg-(--color-background-secondary) overflow-x-hidden md:overflow-x-visible">
       {/* Hero Section */}
       <section className="relative bg-(--color-background-primary) py-20 md:py-28 overflow-visible">
         {/* Decorative 3D elements */}

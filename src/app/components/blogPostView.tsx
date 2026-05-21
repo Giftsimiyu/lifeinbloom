@@ -81,6 +81,66 @@ const portableTextComponents = {
         </figure>
       );
     },
+    inlineImage: ({ value }: any) => {
+      const image = value?.image;
+      if (!image) return null;
+
+      return (
+        <figure className="my-8 inline-block align-middle">
+          <img
+            src={urlFor(image).url()}
+            alt={image.alt || "Inline post image"}
+            className="max-w-full rounded-lg"
+          />
+          {image.alt && (
+            <figcaption className="text-sm text-(--color-neutral-grey) text-center mt-2">
+              {image.alt}
+            </figcaption>
+          )}
+        </figure>
+      );
+    },
+    table: ({ value }: any) => {
+      const rows = value?.rows || value?.body || [];
+      if (!Array.isArray(rows) || rows.length === 0) return null;
+
+      return (
+        <div className="overflow-x-auto my-10">
+          <table className="min-w-full border-collapse text-sm">
+            <tbody>
+              {rows.map((row: any, rowIndex: number) => {
+                const cells = Array.isArray(row.cells) ? row.cells : Array.isArray(row) ? row : [];
+                return (
+                  <tr
+                    key={row._key || rowIndex}
+                    className={rowIndex % 2 === 0 ? "bg-(--color-background-primary)" : "bg-(--color-background-secondary)"}
+                  >
+                    {cells.map((cell: any, cellIndex: number) => {
+                      const cellValue =
+                        typeof cell === "string"
+                          ? cell
+                          : Array.isArray(cell?.content)
+                          ? cell.content.map((item: any) => item?.text || JSON.stringify(item)).join(" ")
+                          : typeof cell?.text === "string"
+                          ? cell.text
+                          : typeof cell?.value === "string"
+                          ? cell.value
+                          : JSON.stringify(cell);
+
+                      return (
+                        <td key={cell._key || cellIndex} className="border border-(--color-neutral-light) p-4 align-top">
+                          {cellValue}
+                        </td>
+                      );
+                    })}
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+      );
+    },
   },
   block: {
     h1: ({ children, value }: any) => {
@@ -238,7 +298,7 @@ export default function BlogPostView({
           <img
             src={imageUrl}
             alt={post.title}
-            className="w-full h-96 md:h-128 object-cover"
+            className="w-full h-[20rem] sm:h-[24rem] md:h-[32rem] object-cover"
             loading="lazy"
           />
         </figure>

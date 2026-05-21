@@ -3,7 +3,7 @@
 export const schema: { types: SchemaTypeDefinition[] } = {
   types: [],
 }*/
-import { post } from './post'
+import { post, inlineImage } from './post'
 import { category } from './category'
 import { subcategory } from './subcategory'
 import {author} from './author'
@@ -16,5 +16,5 @@ import { product } from './product'
 import { productCategory } from './productCategory'
 
 export const schema = {
-  types: [post, category, subcategory, author, questionOfTheWeek, comment, newsletter, announcement, postIdea, product, productCategory],
+  types: [post, inlineImage, category, subcategory, author, questionOfTheWeek, comment, newsletter, announcement, postIdea, product, productCategory],
 }
