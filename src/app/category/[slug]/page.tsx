@@ -1,5 +1,3 @@
-"use client";
-
 export const revalidate = 60;
 export const dynamicParams = true;
 
