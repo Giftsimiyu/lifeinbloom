@@ -9,6 +9,9 @@ import { getCommentCounts, getCommentCountForPost } from "@/sanity/lib/comments"
 import BlogPostView from "../../components/blogPostView";
 import { urlFor } from "@/sanity/lib/image";
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 export async function generateMetadata({
   params,
 }: {

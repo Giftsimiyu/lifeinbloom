@@ -4,6 +4,8 @@ import PostCard from "@/app/components/postCard";
 import { getLatestPosts } from "@/sanity/lib/sanity";
 import { getCommentCounts } from "@/sanity/lib/comments";
 
+export const revalidate = 60;
+
 export const metadata: Metadata = {
   title: "Blog",
   description: "All blog posts",

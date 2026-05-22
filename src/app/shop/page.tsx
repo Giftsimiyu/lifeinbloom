@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getFeaturedProducts, getProductCategories, getAllProducts, getTotalProductCount, getProductsByCategory, getProductsByCategoryCount } from "@/sanity/lib/sanity";
+export const revalidate = 60;
 import RotatingFlower from "@/app/components/rotatingFlower";
 import Floating3dLeaf from "@/app/components/floating3dLeaf";
 import GlowingAccent from "@/app/components/glowingAccent";

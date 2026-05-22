@@ -1,5 +1,8 @@
 "use client";
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 import CategoryLayout from "@/app/components/categoryLayout";
 import {
   getPaginatedPostsByCategory,

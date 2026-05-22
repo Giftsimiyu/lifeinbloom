@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllCategories } from "@/sanity/lib/sanity";
+export const revalidate = 60;
 import RotatingFlower from "@/app/components/rotatingFlower";
 import Floating3dLeaf from "@/app/components/floating3dLeaf";
 import CategoriesSection from "@/app/components/CategoriesSection";

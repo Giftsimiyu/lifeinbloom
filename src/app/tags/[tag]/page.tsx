@@ -1,5 +1,7 @@
 import { client } from "@/sanity/lib/client";
 import { groq } from "next-sanity";
+export const revalidate = 60;
+export const dynamicParams = true;
 import PostCard from "@/app/components/postCard";
 import { Metadata } from "next";
 import { motion } from "framer-motion";

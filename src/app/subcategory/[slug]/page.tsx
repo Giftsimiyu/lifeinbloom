@@ -1,5 +1,8 @@
 "use server";
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 import { Metadata } from "next";
 import CategoryLayout from "@/app/components/categoryLayout";
 import { client } from "@/sanity/lib/client";
