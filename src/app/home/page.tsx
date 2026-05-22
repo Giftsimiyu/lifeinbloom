@@ -1,5 +1,7 @@
 'use client';
 
+export const revalidate = 60;
+
 import React, { useEffect, useState } from "react";
 import PostCard from "../components/postCard";
 import QuestionOfTheWeek from "../components/questionOfTheWeek";
