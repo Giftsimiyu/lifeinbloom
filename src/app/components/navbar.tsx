@@ -13,6 +13,7 @@ import { HiOutlineShoppingBag } from "react-icons/hi";
 export default function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const router = useRouter();
 
@@ -91,20 +92,72 @@ export default function Navbar() {
       : "-translate-y-6 opacity-0 pointer-events-none"
   }`}
 >
-  <div className="flex flex-col items-center py-10 space-y-7 min-h-[70vh]">
-    <Link onClick={() => setMenuOpen(false)} href="/home" className="text-sm">
+  <div className="flex flex-col items-center py-10 space-y-6 min-h-[70vh] px-6">
+    <Link
+      onClick={() => setMenuOpen(false)}
+      href="/home"
+      className="text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors text-center"
+    >
       Home
     </Link>
-    <Link onClick={() => setMenuOpen(false)} href="/shop" className="text-sm">
+    <Link
+      onClick={() => setMenuOpen(false)}
+      href="/shop"
+      className="text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors text-center"
+    >
       Shop
     </Link>
-    <Link onClick={() => setMenuOpen(false)} href="/about" className="text-sm">
-      About
-    </Link>
-    <Link onClick={() => setMenuOpen(false)} href="/contact" className="text-sm">
+    <div className="w-full max-w-xs text-center">
+      <button
+        type="button"
+        onClick={() => setMobileAboutOpen((open) => !open)}
+        aria-expanded={mobileAboutOpen}
+        className="w-full flex items-center justify-center gap-2 text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors"
+      >
+        <span>About</span>
+        <HiOutlineChevronDown
+          className={`h-4 w-4 transition-transform duration-200 ${mobileAboutOpen ? "rotate-180" : ""}`}
+        />
+      </button>
+      <div
+        className={`overflow-hidden transition-all duration-300 ${mobileAboutOpen ? "max-h-36 opacity-100" : "max-h-0 opacity-0"}`}
+      >
+        <div className="mt-3 flex flex-col gap-3 items-center">
+          <Link
+            onClick={() => {
+              setMenuOpen(false);
+              setMobileAboutOpen(false);
+            }}
+            href="/about"
+            className="text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors text-center"
+          >
+            The Blog
+          </Link>
+          <Link
+            onClick={() => {
+              setMenuOpen(false);
+              setMobileAboutOpen(false);
+            }}
+            href="/about/the-author"
+            className="text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors text-center"
+          >
+            The Author
+          </Link>
+        </div>
+      </div>
+    </div>
+    <Link
+      onClick={() => setMenuOpen(false)}
+      href="/contact"
+      className="text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors text-center"
+    >
       Contact
     </Link>
-    <Link onClick={() => setMenuOpen(false)} href="/suggest" className="text-sm">
+    <Link
+      onClick={() => setMenuOpen(false)}
+      href="/suggest"
+      className="text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors text-center"
+    >
       Suggest
     </Link>
   </div>

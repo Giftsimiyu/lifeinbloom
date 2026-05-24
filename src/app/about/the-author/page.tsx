@@ -28,7 +28,7 @@ export default function AuthorPage() {
           <div className="grid md:grid-cols-2 gap-12 items-start">
             <div className="bg-gradient-to-br from-(--color-accent-olive)/20 to-(--color-accent-terracotta)/20 rounded-2xl p-6 md:p-10 flex items-center justify-center sticky top-20">
               <div className="text-center">
-                <img src="/me1.jpeg" alt="Author" className="w-40 h-40 md:w-50 md:h-50 object-cover rounded-full shadow-lg mx-auto mb-4" />
+                <img src="/me.jpeg" alt="Author" className="w-40 h-40 md:w-50 md:h-50 object-cover rounded-full shadow-lg mx-auto mb-4" />
                 <h2 className="font-display text-2xl text-(--color-accent-wilderness)">
                   The Creator
                 </h2>
