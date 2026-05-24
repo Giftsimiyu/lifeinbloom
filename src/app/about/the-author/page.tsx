@@ -26,9 +26,9 @@ export default function AuthorPage() {
       <section className="py-24">
         <div className="max-w-4xl mx-auto px-8">
           <div className="grid md:grid-cols-2 gap-12 items-start">
-            <div className="bg-gradient-to-br from-(--color-accent-olive)/20 to-(--color-accent-terracotta)/20 rounded-2xl p-8 md:p-12 flex items-center justify-center sticky top-20">
+            <div className="bg-gradient-to-br from-(--color-accent-olive)/20 to-(--color-accent-terracotta)/20 rounded-2xl p-6 md:p-10 flex items-center justify-center sticky top-20">
               <div className="text-center">
-                <div className="text-9xl mb-6">👩‍🌾</div>
+                <img src="/me1.jpeg" alt="Author" className="w-40 h-40 md:w-50 md:h-50 object-cover rounded-full shadow-lg mx-auto mb-4" />
                 <h2 className="font-display text-2xl text-(--color-accent-wilderness)">
                   The Creator
                 </h2>
@@ -54,13 +54,7 @@ export default function AuthorPage() {
                   The Philosophy
                 </h3>
                 <p className="font-body text-base text-(--color-neutral-dark) leading-relaxed">
-                  I believe that magic lives in the ordinary. It's in the way
-                  morning light filters through a well-placed linen curtain, in
-                  the ritual of brewing tea, in choosing to wear the clothes
-                  that make you feel like yourself rather than trying to fit
-                  someone else's mold. Life in Bloom exists because I wanted to
-                  build a space where these quiet moments of beauty are
-                  celebrated and honored.
+                  I believe that our lives are a gift, and how we choose to live them matters. Every moment is an opportunity to cultivate beauty, connection, and growth. Life's too short to not savor the beautiful, messy, imperfect journey of being human. My hope is that Life in Bloom inspires you to slow down, choose intentionally, and embrace the beauty in the everyday.
                 </p>
               </div>
 
@@ -71,11 +65,12 @@ export default function AuthorPage() {
                 <ul className="space-y-2">
                   {[
                     "Rearranging furniture and redesigning spaces",
-                    "Tending to plants (and occasionally learning from their demise)",
                     "Getting completely lost in a good book with tea in hand",
+                    "Listening to a good playlist",
+                    "Football games and FC Barcelona ",
                     "Curating wardrobes that feel authentically me",
                     "Long conversations about purpose and growth",
-                    "Creating cozy corners that feel like a warm hug",
+                    "Good food and good company",
                     "Supporting other creatives and dreamers",
                   ].map((item, index) => (
                     <li
@@ -99,24 +94,14 @@ export default function AuthorPage() {
                   I grew up learning that productivity was tied to self-worth,
                   that more was always better, and that slowing down was a
                   luxury I couldn't afford. For years, I lived by that
-                  blueprint—until burnout came knocking. It wasn't dramatic; it
-                  was quiet and exhausting. I was running on empty, searching
-                  for meaning in the wrong places.
+                  blueprint—until burnout came knocking. I was running on empty, searching for meaning in the wrong places.
                 </p>
                 <p className="font-body text-base text-(--color-neutral-dark) leading-relaxed mb-4">
                   The turning point came when I realized I didn't have to live
-                  that way. I started small: making my bed with intention,
-                  replacing fast fashion with pieces I actually loved, saying no
-                  without explaining myself. These tiny acts became a revolution
-                  in my own life. I discovered that soft living isn't about
-                  being weak—it's about being intentional. It's fierce,
-                  actually.
+                  that way. I could choose a different path—one that prioritized well-being, joy, and authenticity over constant hustle. It wasn't an overnight transformation, but it was a decision to start living on my own terms.
                 </p>
                 <p className="font-body text-base text-(--color-neutral-dark) leading-relaxed">
-                  That's what Life in Bloom is about. It's an invitation to
-                  everyone who's tired of the hustle culture narrative. To
-                  anyone who wants to design a life that feels good, not just
-                  looks good. To those brave enough to choose themselves.
+                  That's what Life in Bloom is about. It's a celebration of the journey toward intentional living, a reminder that you deserve a life that feels good, and a community for those who want to bloom at their own pace. I'm so grateful you're here, and I can't wait to see how we grow together.
                 </p>
               </div>
             </div>
@@ -146,7 +131,7 @@ export default function AuthorPage() {
               {
                 icon: "🏡",
                 title: "Home",
-                description: "Creating spaces that nourish the soul",
+                description: "Creating spaces that make me feel safe, inspired, and at peace",
               },
               {
                 icon: "📚",
@@ -193,10 +178,7 @@ export default function AuthorPage() {
                 My Creative Process
               </h3>
               <p className="font-body text-base text-(--color-neutral-dark) leading-relaxed">
-                I write best in the morning with good coffee, surrounded by
-                plants and natural light. Each piece starts as a feeling or
-                observation, and I let it grow from there. There's no
-                formula—just authenticity and a desire to connect.
+                I write best in the morning with a good cup of tea, music playing in the background. I like to start with a brain dump of all my thoughts and feelings, then I let it sit for a day or two before I go back and shape it into something meaningful. I believe creativity is a process, not a product, and I try to honor that in everything I create.
               </p>
             </div>
 
@@ -206,9 +188,7 @@ export default function AuthorPage() {
               </h3>
               <p className="font-body text-base text-(--color-neutral-dark) leading-relaxed">
                 A cozy corner with a desk by the window, a collection of
-                journals, pressed flowers, soft lighting, and way too many
-                plants. I believe where you create matters—it should feel like a
-                sanctuary.
+                journals, and a few favorite books. I believe where you create matters.
               </p>
             </div>
 
@@ -217,9 +197,7 @@ export default function AuthorPage() {
                 Current Favorites
               </h3>
               <p className="font-body text-base text-(--color-neutral-dark) leading-relaxed">
-                Journaling, botanical illustration, vintage aesthetics, linen
-                everything, ceramics, long walks in nature, handwritten letters,
-                and conversations about life, philosophy, and dreams.
+                Sports romance books, cartoon art illustration, spanish music, trying new recipes.
               </p>
             </div>
           </div>
@@ -233,10 +211,7 @@ export default function AuthorPage() {
             Why This Matters
           </h2>
           <p className="font-body text-lg text-(--color-neutral-dark) leading-relaxed mb-8">
-            I write and create because I believe you deserve a life that feels
-            good. Not one that looks good on Instagram, but one that actually
-            nourishes your soul. You deserve to move slowly, choose
-            intentionally, and bloom at your own pace.
+            I write and create because I believe you deserve a life that feels fulfilling. If this space can inspire even one person to choose themselves, slow down, or find beauty in the everyday, then sharing it is worth it.
           </p>
           <p className="font-body text-lg text-(--color-neutral-dark) leading-relaxed mb-8">
             Thank you for being here. Your presence matters more than you know.
