@@ -37,6 +37,9 @@ export const metadata: Metadata = {
     default: "Life in Bloom",
     template: "%s | Life in Bloom",
   },
+  other: {
+    monetag: '01afaf694a0db0a18dff83f6c82f2751',
+  },
   description:
     "Life in Bloom is a lifestyle blog exploring soft living, fashion, beauty, home design, and personal growth.",
   openGraph: {
