@@ -41,5 +41,8 @@
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^4.1.6"
+  },
+  "overrides": {
+    "glob": "^10.4.5"
   }
 }
