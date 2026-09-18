@@ -6,11 +6,12 @@ import { motion } from "framer-motion";
 import {
   FaInstagram,
   FaPinterest,
-  FaLinkedin,
 } from "react-icons/fa";
 import { FaXTwitter} from "react-icons/fa6";
+import { SiThreads } from "react-icons/si";
 import NewsletterForm from "./newsletterForm";
 import GlowingAccent from "./glowingAccent";
+import { socialLinks } from "../lib/socialLinks";
 
 export default function Footer() {
   return (
@@ -51,8 +52,9 @@ export default function Footer() {
           {/* Social links with icons */}
           <div className="flex gap-4 items-center justify-center">
             <motion.a 
-              href="/" 
+              href={socialLinks.instagram}
               target="_blank" 
+              rel="noopener noreferrer"
               aria-label="Instagram"
               whileHover={{ scale: 1.2, rotate: 12 }}
               transition={{ type: 'spring', stiffness: 400 }}
@@ -60,8 +62,9 @@ export default function Footer() {
               <FaInstagram className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors" />
             </motion.a>
             <motion.a 
-              href="/" 
+              href={socialLinks.pinterest}
               target="_blank" 
+              rel="noopener noreferrer"
               aria-label="Pinterest"
               whileHover={{ scale: 1.2, rotate: 12 }}
               transition={{ type: 'spring', stiffness: 400 }}
@@ -69,8 +72,9 @@ export default function Footer() {
               <FaPinterest className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
             </motion.a>
             <motion.a 
-              href="/" 
+              href={socialLinks.x}
               target="_blank" 
+              rel="noopener noreferrer"
               aria-label="X (formerly Twitter)"
               whileHover={{ scale: 1.2, rotate: 12 }}
               transition={{ type: 'spring', stiffness: 400 }}
@@ -78,13 +82,14 @@ export default function Footer() {
               <FaXTwitter className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
             </motion.a>
             <motion.a 
-              href="/" 
+              href={socialLinks.threads}
               target="_blank" 
-              aria-label="LinkedIn"
+              rel="noopener noreferrer"
+              aria-label="Threads"
               whileHover={{ scale: 1.2, rotate: 12 }}
               transition={{ type: 'spring', stiffness: 400 }}
             >
-              <FaLinkedin className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
+              <SiThreads className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
             </motion.a>
           </div>
 

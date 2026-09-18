@@ -10,9 +10,10 @@ import {
   FaEnvelope,
   FaInstagram,
   FaPinterest,
-  FaLinkedin,
 } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
+import { SiThreads } from "react-icons/si";
+import { socialLinks } from "@/app/lib/socialLinks";
 
 
 
@@ -142,8 +143,9 @@ export default function ContactPage() {
                     <FaEnvelope className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors" />
                   </motion.a>
                   <motion.a 
-                    href="/" 
+                    href={socialLinks.instagram}
                     target="_blank" 
+                    rel="noopener noreferrer"
                     aria-label="Instagram"
                     whileHover={{ scale: 1.2, rotate: 12 }}
                     transition={{ type: 'spring', stiffness: 400 }}
@@ -151,8 +153,9 @@ export default function ContactPage() {
                     <FaInstagram className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors" />
                   </motion.a>
                   <motion.a 
-                    href="/" 
+                    href={socialLinks.pinterest}
                     target="_blank" 
+                    rel="noopener noreferrer"
                     aria-label="Pinterest"
                     whileHover={{ scale: 1.2, rotate: 12 }}
                     transition={{ type: 'spring', stiffness: 400 }}
@@ -160,22 +163,24 @@ export default function ContactPage() {
                     <FaPinterest className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
                   </motion.a>
                   <motion.a 
-                    href="/" 
+                    href={socialLinks.x}
                     target="_blank" 
-                    aria-label="Twitter"
+                    rel="noopener noreferrer"
+                    aria-label="X (formerly Twitter)"
                     whileHover={{ scale: 1.2, rotate: 12 }}
                     transition={{ type: 'spring', stiffness: 400 }}
                   >
                     <FaXTwitter className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
                   </motion.a>
                   <motion.a 
-                    href="/" 
+                    href={socialLinks.threads}
                     target="_blank" 
-                    aria-label="LinkedIn"
+                    rel="noopener noreferrer"
+                    aria-label="Threads"
                     whileHover={{ scale: 1.2, rotate: 12 }}
                     transition={{ type: 'spring', stiffness: 400 }}
                   >
-                    <FaLinkedin className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
+                    <SiThreads className="text-(--color-neutral-grey) hover:text-(--color-accent-olive) transition-colors " />
                   </motion.a>
                 </div>
               </div>
