@@ -40,6 +40,7 @@ export const metadata: Metadata = {
   },
   other: {
     monetag: '01afaf694a0db0a18dff83f6c82f2751',
+    'p:domain_verify': '05f872715de0adc41656e9029ef9ee9b',
   },
   description:
     "Life in Bloom is a lifestyle blog exploring soft living, fashion, beauty, home design, and personal growth.",
