@@ -174,10 +174,13 @@ export default function Navbar() {
               </Link>
 
               <div className="relative group mr-6 md:mr-8">
-                <button className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors flex items-center gap-1">
+                <Link
+                  href="/shop"
+                  className="font-body text-sm text-[var(--color-neutral-grey)] hover:text-[var(--color-accent-olive)] transition-colors flex items-center gap-1"
+                >
                   Shop
                   <HiOutlineChevronDown className="h-4 w-4" />
-                </button>
+                </Link>
                 <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-56 rounded-xl border border-[var(--color-neutral-cream)] bg-[var(--color-background-primary)] shadow-lg opacity-0 invisible translate-y-2 transition-all duration-200 group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 z-40">
                   <Link
                     href="/shop"
