@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 import localFont from "next/font/local";
 import NavbarFooterWrapper from "./components/navbarFooterWrapper";
@@ -83,6 +84,7 @@ export default function RootLayout({
             <NavbarFooterWrapper>{children}</NavbarFooterWrapper>
           </WishlistProvider>
         </CartProvider>
+        <Analytics />
       </body>
     </html>
   );

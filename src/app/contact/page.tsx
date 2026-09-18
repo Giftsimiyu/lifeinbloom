@@ -95,16 +95,7 @@ export default function ContactPage() {
                 whileHover={{ scale: 1.1, rotate: 180 }}
                 transition={{ type: 'spring', stiffness: 400 }}
               >
-                <svg
-                  className="w-6 h-6 text-(--color-accent-olive)"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <rect x="2" y="4" width="20" height="16" rx="2" />
-                  <path d="m10 9 5 3.5M2 6l10 7 10-7" />
-                </svg>
+                <FaEnvelope className="w-6 h-6 text-(--color-accent-olive)" />
               </motion.div>
               <h3 className="font-display text-lg text-(--color-accent-wilderness) mb-2">
                 Email
