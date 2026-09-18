@@ -134,8 +134,7 @@ export default function ContactPage() {
 
                 <div className="flex gap-4 items-center justify-center">
                   <motion.a 
-                    href="/" 
-                    target="_blank" 
+                    href="mailto:hello@mail.lifeinbloomblog.com"
                     aria-label="Email"
                     whileHover={{ scale: 1.2, rotate: 12 }}
                     transition={{ type: 'spring', stiffness: 400 }}

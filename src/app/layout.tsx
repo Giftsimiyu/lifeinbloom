@@ -76,7 +76,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${monicaGarden.variable} ${mayfestRegular.variable} ${theMunday.variable} antialiased overflow-x-hidden`}
+        className={`${inter.variable} ${monicaGarden.variable} ${mayfestRegular.variable} ${theMunday.variable} antialiased overflow-x-clip`}
       >
         <CartProvider>
           <WishlistProvider>
